@@ -23,11 +23,13 @@ model User {
   role           String   @default("ADMIN")
   stock          Wood[]
 
-  admin       User?   @relation("adminUser", fields: [adminId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  adminId     String? @db.ObjectId
-  commercials User[]  @relation("adminUser")
+  adminId    String? @db.ObjectId
+  admin      User?   @relation("adminCommercial", fields: [adminId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  commercial User[]  @relation("adminCommercial")
 
   commercialsId String[] @db.ObjectId
+  // commercials   User[]   @relation("commercialsAdmin", fields: [commercialsId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  // adminId         User?    @relation("commercialsAdmin")
 
   // commercials User[] @relation("commercialsUser", fields: [commercialsId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   // commercialsId String[] @db.ObjectId

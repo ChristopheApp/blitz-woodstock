@@ -6,6 +6,7 @@ import logout from "src/auth/mutations/logout"
 import { useMutation } from "@blitzjs/rpc"
 import { useCurrentUser } from "src/users/hooks/useCurrentUser"
 import Header from "src/core/components/Header"
+import AddCommercialForm from "src/auth/components/AddCommercialForm"
 
 const DashboardPage: BlitzPage = () => {
   const router = useRouter()
@@ -17,6 +18,10 @@ const DashboardPage: BlitzPage = () => {
     <Layout title="Dashboard">
       <div className={styles.globe} />
       <Header />
+
+      <div className={styles.container}>
+        {currentUser && <AddCommercialForm adminId={currentUser.id} />}
+      </div>
     </Layout>
   )
 }
