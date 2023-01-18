@@ -21,6 +21,11 @@ model User {
   email          String   @unique
   hashedPassword String?
   role           String   @default("ADMIN")
+  stock          Wood[]
+
+  adminId     String? @unique @db.ObjectId
+  admin       User?   @relation("adminUsers", fields: [adminId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  commercials User[]  @relation("adminUsers")
 
   tokens   Token[]
   sessions Session[]
@@ -58,9 +63,60 @@ model Token {
   @@unique([hashedToken, type])
 }
 
-enum Role {
-  ADMIN
-  COMMERCiAL
+model Supplier {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  name      String   @unique
+  phone     String?
+  email     String?
+
+  stock Wood[]
+}
+
+model Buyer {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  firstname String
+  lastname  String
+  phone     String?
+  email     String?
+  company   String?
+}
+
+model Wood {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  type      String   @unique
+  price     Float
+  quantity  Int?
+
+  user   User?   @relation(fields: [userId], references: [id])
+  userId String? @db.ObjectId
+
+  supplier   Supplier? @relation(fields: [supplierId], references: [id])
+  supplierId String?   @db.ObjectId
+
+  command   Command? @relation(fields: [commandId], references: [id])
+  commandId String?  @db.ObjectId
+}
+
+model Command {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  quantity  Int
+  price     Float
+  status    String
+
+  wood    Wood[]
+  // buyer          Buyer?    @relation(fields: [buyerId], references: [id])
+  buyerId String? @db.ObjectId
+
+  // supplier       Supplier? @relation(fields: [supplierId], references: [id])
+  supplierId String? @db.ObjectId
 }
 
 // NOTE: It's highly recommended to use an enum for the token type
