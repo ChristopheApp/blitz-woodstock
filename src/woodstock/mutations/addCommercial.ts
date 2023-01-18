@@ -11,9 +11,9 @@ export default resolver.pipe(
     const user = await db.user.create({
       data: {
         email: email.toLowerCase().trim(),
-        adminId: adminId,
         hashedPassword,
         role: "COMMERCIAL",
+        adminId: adminId,
       },
       select: { id: true, name: true, email: true, role: true },
     })

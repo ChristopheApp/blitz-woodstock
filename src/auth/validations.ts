@@ -16,12 +16,6 @@ export const Signup = z.object({
   password,
 })
 
-export const AddCommercial = z.object({
-  email,
-  password,
-  adminId: z.string(),
-})
-
 export const Login = z.object({
   email,
   password: z.string(),

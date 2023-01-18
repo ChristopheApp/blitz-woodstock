@@ -1,7 +1,7 @@
 import { LabeledTextField } from "src/core/components/LabeledTextField"
 import { Form, FORM_ERROR } from "src/core/components/Form"
 import addCommercial from "../mutations/addCommercial"
-import { AddCommercial } from "src/auth/validations"
+import { AddCommercial } from "../validations"
 import { useMutation } from "@blitzjs/rpc"
 
 type AddCommercialFormProps = {

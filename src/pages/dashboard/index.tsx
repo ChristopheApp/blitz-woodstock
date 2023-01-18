@@ -6,7 +6,7 @@ import logout from "src/auth/mutations/logout"
 import { useMutation } from "@blitzjs/rpc"
 import { useCurrentUser } from "src/users/hooks/useCurrentUser"
 import Header from "src/core/components/Header"
-import AddCommercialForm from "src/auth/components/AddCommercialForm"
+import AddCommercialForm from "src/woodstock/components/AddCommercialForm"
 
 const DashboardPage: BlitzPage = () => {
   const router = useRouter()
