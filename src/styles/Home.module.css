@@ -4,6 +4,23 @@
   height: 100vh;
 }
 
+.buttonsContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.headerCustom {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  border: 1px solid #edff;
+  padding: 0 1rem;
+  background: #eeff;
+  color: #62af;
+}
+
 .main {
   flex: 1;
   padding: 0rem 1rem;
