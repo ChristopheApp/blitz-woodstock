@@ -8,6 +8,9 @@ import { Routes, BlitzPage } from "@blitzjs/next"
 import styles from "src/styles/Home.module.css"
 import Header from "src/core/components/Header"
 import generateSuppliers from "src/woodstock/mutations/generateSuppliers"
+import generateBuyers from "src/woodstock/mutations/generateBuyers"
+import randomWood from "src/woodstock/utils/randomWood"
+import fetchSuppliers from "src/woodstock/suppliers/queries/getSuppliers"
 
 /*
  * This file is just for a pleasant getting started page for your new app.
@@ -58,6 +61,8 @@ const UserInfo = () => {
 }
 
 const Home: BlitzPage = () => {
+  // suppliersInfo()
+
   return (
     <Layout title="Home">
       <div className={styles.globe} />
@@ -82,7 +87,10 @@ const Home: BlitzPage = () => {
               {/* Instructions */}
               <div className={styles.instructions}>
                 <p>
-                  <strong>Add a new model by running the following in your terminal:</strong>
+                  <strong>
+                    TODO : SET CASCADE OR SOMETHING LIKE THIS, WHEN DELETE SUPPLIER? DELETE HIS
+                    STOCK.
+                  </strong>
                 </p>
 
                 <div>
@@ -103,26 +111,42 @@ const Home: BlitzPage = () => {
                   <div className={styles.code}>
                     <span>2</span>
                     <pre>
-                      <code>Ctrl + c</code>
+                      <button
+                        className={styles.button}
+                        onClick={async () => {
+                          await fetchSuppliers()
+                        }}
+                      >
+                        button test fetch suppliers
+                      </button>
                     </pre>
                   </div>
 
                   <div className={styles.code}>
                     <span>3</span>
                     <pre>
-                      <code>blitz dev</code>
+                      <button
+                        className={styles.button}
+                        onClick={async () => {
+                          await generateBuyers()
+                        }}
+                      >
+                        generate Buyers
+                      </button>
                     </pre>
                   </div>
 
                   <div className={styles.code}>
                     <span>4</span>
                     <pre>
-                      <code>
-                        Go to{" "}
-                        <Link href="/projects" className={styles.textLink}>
-                          /projects
-                        </Link>
-                      </code>
+                      <button
+                        className={styles.button}
+                        onClick={async () => {
+                          randomWood()
+                        }}
+                      >
+                        button test wood
+                      </button>
                     </pre>
                   </div>
                 </div>

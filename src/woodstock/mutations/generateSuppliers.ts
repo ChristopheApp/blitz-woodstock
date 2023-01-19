@@ -1,29 +1,28 @@
 import db from "db"
+import randomSupplier from "../utils/randomSupplier"
+import randomWoodStock from "../utils/randomWoodStock"
 
 export default async function generateSuppliers() {
-  let i = 2
-  const supplier = await db.supplier.create({
-    data: {
-      name: `Supplier ${i}`,
-      email: `supplier${i}@supplier.com`,
-      phone: "0123456789",
-      stock: {
-        create: [
-          {
-            type: `Stock ${i}`,
-            quantity: 100,
-            price: 100,
-          },
-          {
-            type: `Stock ${i}`,
-            quantity: 100,
-            price: 100,
-          },
-        ],
+  const maxSuppliers = Math.floor(Math.random() * (9 - 3) + 3)
+  let suppliers: any = []
+
+  for (let i = 0; i < maxSuppliers; i++) {
+    const data = randomSupplier()
+    const stock = randomWoodStock()
+    const supplier = await db.supplier.upsert({
+      where: { name: data.name },
+      update: {},
+      create: {
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        stock: {
+          create: stock,
+        },
       },
-    },
-    select: { id: true, name: true, email: true, phone: true, stock: true },
-  })
-  console.log(supplier)
-  return supplier
+      select: { id: true, name: true, email: true, phone: true, stock: true },
+    })
+    suppliers.push(supplier)
+  }
+  return suppliers
 }
