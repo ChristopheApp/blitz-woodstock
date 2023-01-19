@@ -7,6 +7,7 @@ import { useMutation } from "@blitzjs/rpc"
 import { Routes, BlitzPage } from "@blitzjs/next"
 import styles from "src/styles/Home.module.css"
 import Header from "src/core/components/Header"
+import generateSuppliers from "src/woodstock/mutations/generateSuppliers"
 
 /*
  * This file is just for a pleasant getting started page for your new app.
@@ -88,7 +89,14 @@ const Home: BlitzPage = () => {
                   <div className={styles.code}>
                     <span>1</span>
                     <pre>
-                      <code>blitz generate all project</code>
+                      <button
+                        className={styles.button}
+                        onClick={async () => {
+                          await generateSuppliers()
+                        }}
+                      >
+                        Generate supplier
+                      </button>
                     </pre>
                   </div>
 

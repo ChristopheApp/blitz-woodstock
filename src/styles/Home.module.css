@@ -4,6 +4,20 @@
   height: 100vh;
 }
 
+.sectionContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  text-align: center;
+  width: 100vw;
+  background-color: aqua;
+}
+
+.sections {
+  min-width: 30%;
+  background-color: #7450ec;
+}
+
 .buttonsContainer {
   display: flex;
   flex-direction: column;

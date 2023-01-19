@@ -61,12 +61,23 @@ const DashboardPage: BlitzPage = () => {
       <div className={styles.globe} />
       <Header />
 
-      <div className={styles.container}>
-        {currentUser && currentUser.role === "ADMIN" && (
-          <AddCommercialForm adminId={currentUser.id} />
-        )}
-        {currentUser && currentUser.role === "ADMIN" && <UserCommercialInfos />}
-        {currentUser && currentUser.role === "COMMERCIAL" && <UserAdminInfos />}
+      <div className={styles.sectionContainer}>
+        <section className={styles.sections}>
+          <h2>Stocks</h2>
+        </section>
+
+        <section className={styles.sections}>
+          <h2>commandes</h2>
+        </section>
+
+        <section className={styles.sections}>
+          <h2>Ajouter commercial</h2>
+          {currentUser && currentUser.role === "ADMIN" && (
+            <AddCommercialForm adminId={currentUser.id} />
+          )}
+          {currentUser && currentUser.role === "ADMIN" && <UserCommercialInfos />}
+          {currentUser && currentUser.role === "COMMERCIAL" && <UserAdminInfos />}
+        </section>
       </div>
     </Layout>
   )
