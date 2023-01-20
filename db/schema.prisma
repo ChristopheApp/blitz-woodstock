@@ -103,13 +103,13 @@ model Wood {
   price     Float
   quantity  Int?
 
-  user   User?   @relation(fields: [userId], references: [id])
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId String? @db.ObjectId
 
-  supplier   Supplier? @relation(fields: [supplierId], references: [id])
+  supplier   Supplier? @relation(fields: [supplierId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   supplierId String?   @db.ObjectId
 
-  command   Command? @relation(fields: [commandId], references: [id])
+  command   Command? @relation(fields: [commandId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   commandId String?  @db.ObjectId
 }
 

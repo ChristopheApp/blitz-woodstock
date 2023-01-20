@@ -8,7 +8,9 @@ import { Routes, BlitzPage } from "@blitzjs/next"
 import styles from "src/styles/Home.module.css"
 import Header from "src/core/components/Header"
 import generateSuppliers from "src/woodstock/mutations/generateSuppliers"
+import deleteAllSuppliers from "src/woodstock/mutations/deleteAllSuppliers"
 import generateBuyers from "src/woodstock/mutations/generateBuyers"
+import deleteAllBuyers from "src/woodstock/mutations/deleteAllBuyers"
 import randomWood from "src/woodstock/utils/randomWood"
 import fetchSuppliers from "src/woodstock/suppliers/queries/getSuppliers"
 
@@ -142,10 +144,10 @@ const Home: BlitzPage = () => {
                       <button
                         className={styles.button}
                         onClick={async () => {
-                          randomWood()
+                          await deleteAllBuyers()
                         }}
                       >
-                        button test wood
+                        Delete all buyers
                       </button>
                     </pre>
                   </div>

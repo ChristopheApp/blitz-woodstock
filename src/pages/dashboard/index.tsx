@@ -8,7 +8,6 @@ import { useMutation } from "@blitzjs/rpc"
 import { useCurrentUser, useUserAdmin, useUserCommercials } from "src/users/hooks/useCurrentUser"
 import Header from "src/core/components/Header"
 import AddCommercialForm from "src/woodstock/components/AddCommercialForm"
-import fetchCommerials from "src/woodstock/fetchers/fetchCommercials"
 
 const UserCommercialInfos = () => {
   const currentUser = useCurrentUser()
@@ -51,10 +50,6 @@ const DashboardPage: BlitzPage = () => {
   const [logoutMutation] = useMutation(logout)
 
   useEffect(() => {}, [currentUser])
-
-  const fetCom = async () => {
-    if (currentUser) await fetchCommerials(currentUser.id)
-  }
 
   return (
     <Layout title="Dashboard">
