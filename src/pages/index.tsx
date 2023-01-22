@@ -1,7 +1,7 @@
 import { Suspense } from "react"
 import Link from "next/link"
 import Layout from "src/core/layouts/Layout"
-import { useCurrentUser } from "src/users/hooks/useCurrentUser"
+import { useCurrentUser, useUserAdmin, useUserCommercials } from "src/users/hooks/useCurrentUser"
 import logout from "src/auth/mutations/logout"
 import { useMutation } from "@blitzjs/rpc"
 import { Routes, BlitzPage } from "@blitzjs/next"
@@ -13,52 +13,69 @@ import generateBuyers from "src/woodstock/mutations/generateBuyers"
 import deleteAllBuyers from "src/woodstock/mutations/deleteAllBuyers"
 import randomWood from "src/woodstock/utils/randomWood"
 import fetchSuppliers from "src/woodstock/suppliers/queries/getSuppliers"
+import AddCommercialForm from "src/woodstock/components/AddCommercialForm"
+import { User } from "@prisma/client"
 
 /*
  * This file is just for a pleasant getting started page for your new app.
  * You can delete everything in here and start from scratch if you like.
  */
 
-const UserInfo = () => {
-  const currentUser = useCurrentUser()
-  const [logoutMutation] = useMutation(logout)
+interface Props {
+  adminInfo: User | null
+}
 
-  if (currentUser) {
+const UserCommercialInfos = ({ adminInfo }: Props) => {
+  if (adminInfo) {
     return (
       <>
-        <div className={styles.buttonsContainer}>
-          <Link href={Routes.DashboardPage()} className={styles.button}>
-            Dashboard
-          </Link>
-          <button
-            className={styles.button}
-            onClick={async () => {
-              await logoutMutation()
-            }}
-          >
-            Logout
-          </button>
-        </div>
-        <div>
-          Email : <code>{currentUser.email}</code>
-          <br />
-          User role: <code>{currentUser.role}</code>
-          <br />
-          User id: <code>{currentUser.id}</code>
+        <p>Salut je suis admin, y a des commerciaux a afficher</p>
+        <p>{adminInfo.commercialsId}</p>
+      </>
+    )
+  } else {
+    return <></>
+  }
+}
+
+const UserAdminInfos = ({ adminInfo }: Props) => {
+  if (adminInfo) {
+    return <>BOnjour je suis un commerial, cest quoi les stock ?</>
+  } else {
+    return <></>
+  }
+}
+
+const UserInfo = () => {
+  const currentUserInfo = useCurrentUser()
+  console.log("Current user info : ", currentUserInfo)
+  const [logoutMutation] = useMutation(logout)
+
+  if (currentUserInfo) {
+    const { user, admin } = currentUserInfo
+
+    return (
+      <>
+        <div className={styles.sectionContainer}>
+          <section className={styles.sections}>
+            <h2>Stocks</h2>
+          </section>
+
+          <section className={styles.sections}>
+            <h2>commandes</h2>
+          </section>
+
+          <section className={styles.sections}>
+            <h2>Ajouter commercial</h2>
+            {user && user?.role === "ADMIN" && <AddCommercialForm adminId={user?.id} />}
+            {user && user?.role === "ADMIN" && <UserCommercialInfos adminInfo={admin} />}
+            {user && user?.role === "COMMERCIAL" && <UserAdminInfos adminInfo={admin} />}
+          </section>
         </div>
       </>
     )
   } else {
-    return (
-      <>
-        <Link href={Routes.SignupPage()} className={styles.button}>
-          <strong>Sign Up</strong>
-        </Link>
-        <Link href={Routes.LoginPage()} className={styles.loginButton}>
-          <strong>Login</strong>
-        </Link>
-      </>
-    )
+    return <></>
   }
 }
 
@@ -74,7 +91,7 @@ const Home: BlitzPage = () => {
         <main className={styles.main}>
           <div className={styles.wrapper}>
             <div className={styles.header}>
-              <h1>Bienvenue sur Woodstock</h1>
+              <h1>Woodstock</h1>
 
               {/* Auth */}
 
@@ -89,10 +106,7 @@ const Home: BlitzPage = () => {
               {/* Instructions */}
               <div className={styles.instructions}>
                 <p>
-                  <strong>
-                    TODO : SET CASCADE OR SOMETHING LIKE THIS, WHEN DELETE SUPPLIER? DELETE HIS
-                    STOCK.
-                  </strong>
+                  <strong>TODO : Set relation command / user ...</strong>
                 </p>
 
                 <div>

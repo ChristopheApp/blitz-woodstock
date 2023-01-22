@@ -4,8 +4,8 @@ import getAdmin from "src/users/queries/getAdmin"
 import getCommercials from "src/users/queries/getCommercials"
 
 export const useCurrentUser = () => {
-  const [user] = useQuery(getCurrentUser, null)
-  return user
+  const [userInfo] = useQuery(getCurrentUser, null)
+  return userInfo
 }
 
 export const useUserAdmin = (userId) => {

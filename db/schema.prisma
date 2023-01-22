@@ -21,19 +21,16 @@ model User {
   email          String   @unique
   hashedPassword String?
   role           String   @default("ADMIN")
-  stock          Wood[]
+  stocks         Wood[]
 
-  adminId    String? @db.ObjectId
-  admin      User?   @relation("adminCommercial", fields: [adminId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  commercial User[]  @relation("adminCommercial")
+  adminId     String? @db.ObjectId
+  admin       User?   @relation("adminCommercials", fields: [adminId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  commercials User[]  @relation("adminCommercials")
 
   commercialsId String[] @db.ObjectId
-  // commercials   User[]   @relation("commercialsAdmin", fields: [commercialsId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  // adminId         User?    @relation("commercialsAdmin")
 
-  // commercials User[] @relation("commercialsUser", fields: [commercialsId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  // commercialsId String[] @db.ObjectId
-  // admin       User? @relation("commercialsUser")
+  commands   Command[] @relation("userCommands")
+  commandsId String[]  @db.ObjectId
 
   tokens   Token[]
   sessions Session[]
@@ -121,7 +118,11 @@ model Command {
   price     Float
   status    String
 
-  wood    Wood[]
+  wood Wood[]
+
+  user   User?   @relation("userCommands", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId String? @db.ObjectId
+
   // buyer          Buyer?    @relation(fields: [buyerId], references: [id])
   buyerId String? @db.ObjectId
 

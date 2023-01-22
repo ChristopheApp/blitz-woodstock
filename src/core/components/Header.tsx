@@ -1,24 +1,26 @@
 import { Suspense } from "react"
 import styles from "src/styles/Home.module.css"
 import logout from "src/auth/mutations/logout"
+import login from "src/auth/mutations/login"
 import { useMutation } from "@blitzjs/rpc"
 import { useCurrentUser } from "src/users/hooks/useCurrentUser"
 import { Routes, BlitzPage } from "@blitzjs/next"
 import Link from "next/link"
 
 const UserInfo = () => {
-  const currentUser = useCurrentUser()
+  const currentUserInfo = useCurrentUser()
   const [logoutMutation] = useMutation(logout)
 
-  if (currentUser) {
+  if (currentUserInfo) {
+    const { user, admin } = currentUserInfo
     return (
       <>
         <div className={styles.headerCustom}>
           <div>
-            <code>Bienvenue {currentUser.email}</code>
+            <code>{user?.email}</code>
           </div>
           <div>
-            <code>{currentUser.role}</code>
+            <code>{user?.role}</code>
           </div>
           <button
             className={styles.button}
@@ -33,15 +35,13 @@ const UserInfo = () => {
     )
   } else {
     return (
-      <div className={styles.headerCustom}>
-        <button
-          className={styles.button}
-          onClick={async () => {
-            await logoutMutation()
-          }}
-        >
-          Login
-        </button>
+      <div className={styles.headerCustomUnlog}>
+        <Link href={Routes.SignupPage()} className={styles.button}>
+          <strong>Sign Up</strong>
+        </Link>
+        <Link href={Routes.LoginPage()} className={styles.loginButton}>
+          <strong>Login</strong>
+        </Link>
       </div>
     )
   }

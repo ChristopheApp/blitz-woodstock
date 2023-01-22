@@ -41,7 +41,7 @@ const Config: BlitzPage = () => {
                             await generateSuppliers()
                           }}
                         >
-                          Generate supplier
+                          Generate suppliers
                         </button>
                       </pre>
                     </div>

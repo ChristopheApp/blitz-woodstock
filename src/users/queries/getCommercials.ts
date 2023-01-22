@@ -7,6 +7,5 @@ export default async function getCommercials(userId) {
     where: { adminId: userId },
     select: { id: true, name: true, email: true, role: true },
   })
-  console.log(comms)
   return comms
 }

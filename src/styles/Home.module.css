@@ -24,29 +24,6 @@
   background-color: #7450ec;
 }
 
-.buttonDelete {
-  background: linear-gradient(to top, rgb(237, 58, 58), rgb(236, 81, 81));
-  border: 1px solid rgb(231, 216, 246);
-  color: white;
-  text-shadow: rgba(0, 0, 0, 0.25) 0px 3px 8px;
-  padding: 0 24px;
-  height: 48px;
-  width: 200px;
-  max-width: 300px;
-  position: relative;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  flex-shrink: 0;
-  user-select: none;
-  white-space: nowrap;
-  border-radius: 0.75rem;
-  border-bottom-left-radius: 0px;
-  font-size: 15px;
-  transition: all 0.3s ease 0s;
-  cursor: pointer;
-}
-
 .buttonsContainer {
   display: flex;
   flex-direction: column;
@@ -62,6 +39,12 @@
   padding: 0 1rem;
   background: #eeff;
   color: #62af;
+}
+
+.headerCustomUnlog {
+  composes: headerCustom;
+  justify-content: end;
+  gap: 1rem;
 }
 
 .main {
@@ -267,6 +250,11 @@
   font-size: 15px;
   transition: all 0.3s ease 0s;
   cursor: pointer;
+}
+
+.buttonDelete {
+  composes: button;
+  background: linear-gradient(to top, rgb(237, 58, 58), rgb(236, 81, 81));
 }
 
 .button:hover {
