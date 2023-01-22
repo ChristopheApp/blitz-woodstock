@@ -15,21 +15,23 @@ const UserInfo = () => {
     const { user, admin } = currentUserInfo
     return (
       <>
-        <div className={styles.headerCustom}>
-          <div>
+        <div className={styles.headerContainer}>
+          <div className={styles.headerSections}>
             <code>{user?.email}</code>
           </div>
-          <div>
+          <div className={styles.headerSections}>
             <code>{user?.role}</code>
           </div>
-          <button
-            className={styles.button}
-            onClick={async () => {
-              await logoutMutation()
-            }}
-          >
-            Logout
-          </button>
+          <div className={styles.headerSections}>
+            <button
+              className={styles.button}
+              onClick={async () => {
+                await logoutMutation()
+              }}
+            >
+              Logout
+            </button>
+          </div>
         </div>
       </>
     )

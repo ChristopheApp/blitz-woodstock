@@ -20,7 +20,6 @@
 }
 
 .sections {
-  min-width: 30%;
   background-color: #7450ec;
 }
 
@@ -29,7 +28,7 @@
   flex-direction: column;
 }
 
-.headerCustom {
+.headerContainer {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -41,8 +40,13 @@
   color: #62af;
 }
 
+.headerSections {
+  width: 30%;
+  text-align: center;
+}
+
 .headerCustomUnlog {
-  composes: headerCustom;
+  composes: headerContainer;
   justify-content: end;
   gap: 1rem;
 }
