@@ -1,5 +1,5 @@
 import db from "db"
-import randomBuyer from "../utils/randomBuyer"
+import randomBuyer from "../../utils/randomBuyer"
 
 export default async function generateBuyers() {
   const maxBuyers = Math.floor(Math.random() * (9 - 3) + 3)

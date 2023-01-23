@@ -14,6 +14,5 @@ export default async function createUserStocks(adminId: string) {
     include: { stocks: true },
   })
 
-  console.log(user)
   return user
 }

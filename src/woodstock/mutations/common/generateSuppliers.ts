@@ -1,6 +1,6 @@
 import db from "db"
-import randomSupplier from "../utils/randomSupplier"
-import randomWoodStock from "../utils/randomWoodStock"
+import randomSupplier from "../../utils/randomSupplier"
+import randomWoodStock from "../../utils/randomWoodStock"
 
 export default async function generateSuppliers() {
   const maxSuppliers = Math.floor(Math.random() * (9 - 3) + 3)

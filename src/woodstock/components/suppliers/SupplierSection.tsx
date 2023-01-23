@@ -12,19 +12,12 @@ interface Props {
 }
 
 export default function SupplierSection({ suppliers, user, admin }: Props) {
+  console.log(suppliers)
+  const [userSuppliers, setUserSuppliers] = useState<Supplier[]>(suppliers)
   const [allSuppliers, setAllSuppliers] = useState<Supplier[]>([])
-
-  if (suppliers) {
-    console.log("suppliers exist")
-
-    if (suppliers.length === 0) {
-      console.log("aucun suppliers")
-    }
-  }
 
   const fetchSuppliers = async () => {
     const newSuppliers = await getAllSuppliers()
-    console.log(newSuppliers)
     setAllSuppliers(newSuppliers)
     // newSuppliers.forEach(element => {
 
@@ -32,18 +25,17 @@ export default function SupplierSection({ suppliers, user, admin }: Props) {
   }
 
   const addSupplier = async (supplier: Supplier) => {
-    console.log(supplier)
     const adminId = admin.id
     const result = await addSupplierToAdmin({ supplier, adminId })
-    console.log(result)
+    setUserSuppliers(result.suppliers)
   }
 
   return (
     <section className={styles.managementSubMenu}>
-      {suppliers.length === 0 ? (
+      {userSuppliers.length === 0 ? (
         <h3>Vous n'avez pas de fournisseur</h3>
       ) : (
-        <SuppliersList suppliers={suppliers} />
+        <SuppliersList admin={admin} suppliers={userSuppliers} />
       )}
 
       <button onClick={fetchSuppliers}>Ajouter des fournisseurs</button>

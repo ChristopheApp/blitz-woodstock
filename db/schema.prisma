@@ -32,8 +32,8 @@ model User {
   commands   Command[] @relation("userCommands")
   commandsId String[]  @db.ObjectId
 
-  suppliers   Supplier[] @relation("userSuppliers")
-  suppliersId String[]   @db.ObjectId
+  suppliers Supplier[] @relation("userSuppliers")
+  // suppliersId String[]   @db.ObjectId
 
   buyers   Buyer[]  @relation("userBuyers")
   buyersId String[] @db.ObjectId

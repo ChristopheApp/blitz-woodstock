@@ -1,7 +1,6 @@
 import { SecurePassword } from "@blitzjs/auth"
 import { resolver } from "@blitzjs/rpc"
 import db from "db"
-import { Role } from "types"
 import { AddCommercial } from "../validations"
 
 export default resolver.pipe(
