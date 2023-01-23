@@ -16,24 +16,10 @@ const UserInfos = () => {
   console.log("Current user info : ", currentUserInfo)
   const [logoutMutation] = useMutation(logout)
 
-  if (currentUserInfo) {
-    // const { user, admin, commercials, commands, stocks, suppliers, buyers } = currentUserInfo
-    // console.log(commercials)
+  if (currentUserInfo && currentUserInfo.admin) {
     return (
       <>
         <MainSection currentUserInfos={currentUserInfo} />
-        {/* <div className={styles.sectionContainer}>
-            <StockSection stocks={stocks} user={user} admin={admin} />
-  
-            <CommandSection commands={commands} user={user} admin={admin} />
-  
-            <CommercialSection commercials={commercials} user={user} admin={admin} />
-
-            <BuyerSection buyers={buyers} user={user} admin={admin} />
-
-            <SupplierSection suppliers={suppliers} user={user} admin={admin} />
-            
-          </div> */}
       </>
     )
   } else {

@@ -5,7 +5,7 @@ import generateSuppliers from "src/woodstock/mutations/generateSuppliers"
 import deleteAllSuppliers from "src/woodstock/mutations/deleteAllSuppliers"
 import generateBuyers from "src/woodstock/mutations/generateBuyers"
 import deleteAllBuyers from "src/woodstock/mutations/deleteAllBuyers"
-import fetchSuppliers from "src/woodstock/suppliers/queries/getSuppliers"
+import getAllSuppliers from "src/woodstock/suppliers/queries/getSuppliers"
 import deleteAllUsers from "src/woodstock/mutations/deleteAllUsers"
 import cleanAllData from "src/woodstock/mutations/cleanAllData"
 
@@ -110,7 +110,7 @@ const Config: BlitzPage = () => {
                         <button
                           className={styles.button}
                           onClick={async () => {
-                            await fetchSuppliers()
+                            await getAllSuppliers()
                           }}
                         >
                           button test fetch suppliers

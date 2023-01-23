@@ -7,6 +7,7 @@ import generateSuppliers from "src/woodstock/mutations/generateSuppliers"
 import generateBuyers from "src/woodstock/mutations/generateBuyers"
 import deleteAllBuyers from "src/woodstock/mutations/deleteAllBuyers"
 import fetchSuppliers from "src/woodstock/suppliers/queries/getSuppliers"
+import createUserStocks from "src/woodstock/mutations/createUserStock"
 
 import UserInfos from "src/woodstock/components/common/UserInfos"
 /*
