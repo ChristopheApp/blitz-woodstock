@@ -13,10 +13,11 @@ export const AddCommercialForm = (props: AddCommercialFormProps) => {
   const [addCommercialMutation] = useMutation(addCommercial)
   return (
     <div>
-      <h1>Add Commercial</h1>
+      <h3>Ajouter un Commercial</h3>
+      <p>Vous devez mettre son addresse mail et lui créer un mot de passe.</p>
 
       <Form
-        submitText="Add Commercial"
+        submitText="Ajouter"
         schema={AddCommercial}
         initialValues={{ email: "", password: "", adminId: props.adminId }}
         onSubmit={async (values) => {

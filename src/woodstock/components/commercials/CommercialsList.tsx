@@ -7,7 +7,7 @@ interface Props {
 export default function CommercialsList({ commercials }: Props) {
   return (
     <div>
-      <h1>Commercials</h1>
+      <h3>Mes commerciaux</h3>
       <ul>
         {commercials.map((commercial) => (
           <li key={commercial.id}>
