@@ -10,7 +10,6 @@ interface Props {
 
 export default function StockSection({ stocks, user, admin }: Props) {
   const removeWood = async (wood: Wood) => {
-    console.log(wood)
     await deleteWood(wood.id)
   }
 
@@ -20,8 +19,8 @@ export default function StockSection({ stocks, user, admin }: Props) {
         <div onClick={() => removeWood(stock)} key={stock.id} className={styles.stockItems}>
           <h4>{stock.type}</h4>
           <div>
-            <p>Prix : {stock.price} €</p>
-            <p>Quantité : {stock.quantity} m3</p>
+            <p>Prix d'achat moyen : {stock.price} €/m³</p>
+            <p>Quantité : {stock.quantity} m³</p>
           </div>
         </div>
       )

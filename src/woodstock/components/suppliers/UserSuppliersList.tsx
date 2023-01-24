@@ -1,26 +1,38 @@
 import { useState } from "react"
-import { Supplier, User } from "@prisma/client"
+import { Supplier, User, Wood } from "@prisma/client"
 import removeSupplierFromAdmin from "src/woodstock/mutations/removeSupplierFromAdmin"
+import DetailsSupplier from "./DetailsSupplier"
+import stylesSupplier from "./Supplier.module.css"
 
 interface Props {
-  suppliers: Supplier[]
+  suppliers: (Supplier & { stock: Wood[] })[]
   admin: User
 }
 
 export default function UserSuppliersList({ admin, suppliers }: Props) {
-  const [userSuppliers, setUserSuppliers] = useState<Supplier[]>(suppliers)
+  const [userSuppliers, setUserSuppliers] = useState<(Supplier & { stock: Wood[] })[]>(suppliers)
+  const [selectedSupplierId, setSelectedSupplierId] = useState<string>()
 
-  const removeSupplier = async (supplierId: string) => {
-    const adminId = admin.id
-    const result = await removeSupplierFromAdmin({ supplierId, adminId })
-    console.log(result)
-    setUserSuppliers(result.suppliers)
+  const displaySupplierDetails = (supplierId: string) => {
+    if (selectedSupplierId === supplierId) {
+      setSelectedSupplierId(undefined)
+      return
+    }
+    setSelectedSupplierId(supplierId)
   }
 
   const displaySuppliers = userSuppliers.map((supplier) => {
     return (
-      <li key={supplier.id} onClick={() => removeSupplier(supplier.id)}>
-        {supplier.name}
+      <li className={stylesSupplier.moreSuppliersItems} key={supplier.id}>
+        <p
+          onClick={() => displaySupplierDetails(supplier.id)}
+          className={stylesSupplier.moreSuppliersTitle}
+        >
+          {supplier.name}
+        </p>
+        {selectedSupplierId === supplier.id && (
+          <DetailsSupplier supplier={supplier} admin={admin} />
+        )}
       </li>
     )
   })

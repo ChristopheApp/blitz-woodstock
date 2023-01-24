@@ -1,10 +1,12 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import styles from "src/styles/Home.module.css"
-import { User, Supplier } from "@prisma/client"
+import { User, Supplier, Wood } from "@prisma/client"
 import UserSuppliersList from "./UserSuppliersList"
 import getAllSuppliers from "src/woodstock/suppliers/queries/getSuppliers"
 import addSupplierToAdmin from "src/woodstock/mutations/addSupplierToAdmin"
-import SuppliersList from "./SuppliersList"
+import MoreSuppliersList from "./MoreSuppliersList"
+import getNotAdminSuppliers from "src/woodstock/suppliers/queries/getNotAdminSuppliers"
+import getAdminSuppliers from "src/woodstock/suppliers/queries/getAdminSuppliers"
 
 interface Props {
   suppliers: Supplier[]
@@ -14,14 +16,24 @@ interface Props {
 
 export default function SupplierSection({ suppliers, user, admin }: Props) {
   console.log(suppliers)
-  const [userSuppliers, setUserSuppliers] = useState<Supplier[]>(suppliers)
-  const [allSuppliers, setAllSuppliers] = useState<Supplier[]>([])
+
+  const [userSuppliers, setUserSuppliers] = useState<(Supplier & { stock: Wood[] })[]>()
+  const [moreSuppliers, setMoreSuppliers] = useState<(Supplier & { stock: Wood[] })[]>([])
   const [displayNewSuppliers, setDisplayNewSuppliers] = useState<boolean>(false)
+
+  useEffect(() => {
+    const fetchSuppliers = async () => {
+      const suppliers = await getAdminSuppliers(admin.id)
+      setUserSuppliers(suppliers)
+    }
+    fetchSuppliers()
+  }, [])
 
   const fetchSuppliers = async () => {
     if (!displayNewSuppliers) {
-      const newSuppliers = await getAllSuppliers()
-      setAllSuppliers(newSuppliers)
+      const newSuppliers = await getNotAdminSuppliers(admin.id)
+      setMoreSuppliers(newSuppliers)
+      console.log("new suppliers")
       console.log(newSuppliers)
     }
     setDisplayNewSuppliers(!displayNewSuppliers)
@@ -30,15 +42,9 @@ export default function SupplierSection({ suppliers, user, admin }: Props) {
     // });
   }
 
-  const addSupplier = async (supplier: Supplier) => {
-    const adminId = admin.id
-    const result = await addSupplierToAdmin({ supplier, adminId })
-    setUserSuppliers(result.suppliers)
-  }
-
   return (
     <section className={styles.managementSubMenu}>
-      {userSuppliers.length === 0 ? (
+      {!userSuppliers ? (
         <h3>Vous navez pas de fournisseur</h3>
       ) : (
         <UserSuppliersList admin={admin} suppliers={userSuppliers} />
@@ -49,7 +55,7 @@ export default function SupplierSection({ suppliers, user, admin }: Props) {
       </button>
 
       {displayNewSuppliers && (
-        <SuppliersList admin={admin} suppliers={suppliers} allSuppliers={allSuppliers} />
+        <MoreSuppliersList admin={admin} suppliers={suppliers} moreSuppliers={moreSuppliers} />
       )}
     </section>
   )

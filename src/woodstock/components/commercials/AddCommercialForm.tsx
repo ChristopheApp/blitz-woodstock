@@ -3,6 +3,7 @@ import { Form, FORM_ERROR } from "src/core/components/Form"
 import addCommercial from "../../mutations/addCommercial"
 import { AddCommercial } from "../../validations"
 import { useMutation } from "@blitzjs/rpc"
+import styles from "src/styles/Home.module.css"
 
 type AddCommercialFormProps = {
   onSuccess?: () => void
@@ -14,7 +15,7 @@ export const AddCommercialForm = (props: AddCommercialFormProps) => {
   return (
     <div>
       <h3>Ajouter un Commercial</h3>
-      <p>
+      <p className={styles.description}>
         Vous pouvez créer des comptes pour vos commerciaux. Il faut une addresse mail et un mot de
         passe.
       </p>

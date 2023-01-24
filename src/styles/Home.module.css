@@ -12,6 +12,10 @@
   font-size: 3rem;
 }
 
+.description {
+  font-style: italic;
+}
+
 .configContainer {
   display: flex;
   flex-direction: row;
