@@ -120,6 +120,8 @@ model Wood {
 
   command   Command? @relation(fields: [commandId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   commandId String?  @db.ObjectId
+
+  @@unique([type, supplierId, userId])
 }
 
 model Command {

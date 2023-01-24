@@ -14,7 +14,10 @@ export const AddCommercialForm = (props: AddCommercialFormProps) => {
   return (
     <div>
       <h3>Ajouter un Commercial</h3>
-      <p>Vous devez mettre son addresse mail et lui créer un mot de passe.</p>
+      <p>
+        Vous pouvez créer des comptes pour vos commerciaux. Il faut une addresse mail et un mot de
+        passe.
+      </p>
 
       <Form
         submitText="Ajouter"
