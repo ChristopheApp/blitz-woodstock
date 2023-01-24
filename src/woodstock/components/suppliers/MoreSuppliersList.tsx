@@ -6,14 +6,11 @@ import DetailsSupplier from "./DetailsSupplier"
 import stylesSupplier from "./Supplier.module.css"
 
 interface Props {
-  suppliers: Supplier[]
   admin: User
   moreSuppliers: (Supplier & { stock: Wood[] })[]
 }
 
-export default function MoreSuppliersList({ admin, suppliers, moreSuppliers }: Props) {
-  const [userSuppliers, setUserSuppliers] = useState<Supplier[]>(suppliers)
-  // const [allSuppliers, setAllSuppliers] = useState<Supplier[]>([])
+export default function MoreSuppliersList({ admin, moreSuppliers }: Props) {
   const [selectedSupplierId, setSelectedSupplierId] = useState<string>()
 
   const displaySupplierDetails = (supplierId: string) => {

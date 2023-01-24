@@ -37,13 +37,13 @@ export default function MainSection({ currentUserInfos }: Props) {
             onClick={() => setShowSuppliers(!showSuppliers)}
             text="Liste des fournisseurs"
           />
-          {showSuppliers && <SupplierSection user={user} admin={admin} suppliers={suppliers} />}
+          {showSuppliers && <SupplierSection admin={admin} />}
 
           <ButtonManagementSections
             onClick={() => setShowBuyers(!showBuyers)}
             text="Liste des clients"
           />
-          {showBuyers && <BuyerSection user={user} admin={admin} />}
+          {showBuyers && <BuyerSection admin={admin} buyers={buyers} />}
 
           <ButtonManagementSections
             onClick={() => setShowCommands(!showCommands)}

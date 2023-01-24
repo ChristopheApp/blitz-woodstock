@@ -35,8 +35,8 @@ model User {
   suppliers Supplier[] @relation("userSuppliers")
   // suppliersId String[]   @db.ObjectId
 
-  buyers   Buyer[]  @relation("userBuyers")
-  buyersId String[] @db.ObjectId
+  buyers Buyer[] @relation("userBuyers")
+  //buyersId String[] @db.ObjectId
 
   tokens   Token[]
   sessions Session[]

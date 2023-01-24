@@ -2,22 +2,16 @@ import { useEffect, useState } from "react"
 import styles from "src/styles/Home.module.css"
 import { User, Supplier, Wood } from "@prisma/client"
 import UserSuppliersList from "./UserSuppliersList"
-import getAllSuppliers from "src/woodstock/suppliers/queries/getSuppliers"
-import addSupplierToAdmin from "src/woodstock/mutations/addSupplierToAdmin"
 import MoreSuppliersList from "./MoreSuppliersList"
 import getNotAdminSuppliers from "src/woodstock/suppliers/queries/getNotAdminSuppliers"
 import getAdminSuppliers from "src/woodstock/suppliers/queries/getAdminSuppliers"
 
 interface Props {
-  suppliers: Supplier[]
-  user: User | null
   admin: User
 }
 
-export default function SupplierSection({ suppliers, user, admin }: Props) {
-  console.log(suppliers)
-
-  const [userSuppliers, setUserSuppliers] = useState<(Supplier & { stock: Wood[] })[]>()
+export default function SupplierSection({ admin }: Props) {
+  const [userSuppliers, setUserSuppliers] = useState<(Supplier & { stock: Wood[] })[]>([])
   const [moreSuppliers, setMoreSuppliers] = useState<(Supplier & { stock: Wood[] })[]>([])
   const [displayNewSuppliers, setDisplayNewSuppliers] = useState<boolean>(false)
 
@@ -44,8 +38,8 @@ export default function SupplierSection({ suppliers, user, admin }: Props) {
 
   return (
     <section className={styles.managementSubMenu}>
-      {!userSuppliers ? (
-        <h3>Vous navez pas de fournisseur</h3>
+      {userSuppliers.length <= 0 ? (
+        <h3>Vous n'avez pas de fournisseur</h3>
       ) : (
         <UserSuppliersList admin={admin} suppliers={userSuppliers} />
       )}
@@ -54,9 +48,7 @@ export default function SupplierSection({ suppliers, user, admin }: Props) {
         {displayNewSuppliers ? "Masquer les fournisseurs" : "Afficher plus de fournisseurs"}
       </button>
 
-      {displayNewSuppliers && (
-        <MoreSuppliersList admin={admin} suppliers={suppliers} moreSuppliers={moreSuppliers} />
-      )}
+      {displayNewSuppliers && <MoreSuppliersList admin={admin} moreSuppliers={moreSuppliers} />}
     </section>
   )
 }
