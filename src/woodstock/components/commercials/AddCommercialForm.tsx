@@ -3,7 +3,7 @@ import { Form, FORM_ERROR } from "src/core/components/Form"
 import addCommercial from "../../mutations/addCommercial"
 import { AddCommercial } from "../../validations"
 import { useMutation } from "@blitzjs/rpc"
-import styles from "src/styles/Home.module.css"
+import styles from "src/woodstock/styles/common.module.css"
 
 type AddCommercialFormProps = {
   onSuccess?: () => void

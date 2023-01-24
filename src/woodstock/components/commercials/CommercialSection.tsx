@@ -1,4 +1,4 @@
-import styles from "src/styles/Home.module.css"
+import styles from "src/woodstock/styles/common.module.css"
 import { User } from "@prisma/client"
 
 import CommercialsList from "./CommercialsList"

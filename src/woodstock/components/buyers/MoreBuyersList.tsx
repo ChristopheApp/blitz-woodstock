@@ -1,9 +1,7 @@
 import { useState } from "react"
-import { Supplier, User, Wood, Buyer } from "@prisma/client"
-import removeSupplierFromAdmin from "src/woodstock/mutations/removeSupplierFromAdmin"
-import addSupplierToAdmin from "src/woodstock/mutations/addSupplierToAdmin"
-// import DetailsSupplier from "./DetailsSupplier"
-import stylesBuyer from "./Buyer.module.css"
+import { User, Buyer } from "@prisma/client"
+
+import stylesBuyer from "src/woodstock/styles/Buyer.module.css"
 import addBuyerToAdmin from "src/woodstock/mutations/addBuyerToAdmin"
 
 interface Props {

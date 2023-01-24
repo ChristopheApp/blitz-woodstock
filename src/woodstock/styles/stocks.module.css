@@ -7,7 +7,7 @@
   border: 1px solid rgba(255, 255, 255, 0.31);
 }
 
-.managementSection {
+.stockSection {
   display: flex;
   flex-direction: column;
   max-width: 50%;

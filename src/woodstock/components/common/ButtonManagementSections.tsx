@@ -1,4 +1,5 @@
-import styles from "src/styles/Home.module.css"
+import styles from "src/woodstock/styles/common.module.css"
+
 interface Props {
   children?: React.ReactNode
   onClick: () => void

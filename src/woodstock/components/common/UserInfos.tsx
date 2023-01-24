@@ -1,14 +1,6 @@
-import { useCurrentUser, useUserAdmin, useUserCommercials } from "src/users/hooks/useCurrentUser"
-import styles from "src/styles/Home.module.css"
+import { useCurrentUser } from "src/users/hooks/useCurrentUser"
 import { useMutation } from "@blitzjs/rpc"
 import logout from "src/auth/mutations/logout"
-import AddCommercialForm from "src/woodstock/components/commercials/AddCommercialForm"
-import CommercialsList from "src/woodstock/components/commercials/CommercialsList"
-import CommercialSection from "../commercials/CommercialSection"
-import CommandSection from "../commands/CommandSection"
-import StockSection from "../stocks/StockSection"
-import BuyerSection from "../buyers/BuyerSection"
-import SupplierSection from "../suppliers/SupplierSection"
 import MainSection from "./MainSection"
 
 const UserInfos = () => {
@@ -16,10 +8,14 @@ const UserInfos = () => {
   console.log("Current user info : ", currentUserInfo)
   const [logoutMutation] = useMutation(logout)
 
-  if (currentUserInfo && currentUserInfo.admin) {
+  if (currentUserInfo && currentUserInfo.user && currentUserInfo.admin) {
+    let adminMode = false
+
+    if (currentUserInfo.user.role === "ADMIN") adminMode = true
+
     return (
       <>
-        <MainSection currentUserInfos={currentUserInfo} />
+        <MainSection adminMode={adminMode} currentUserInfos={currentUserInfo} />
       </>
     )
   } else {

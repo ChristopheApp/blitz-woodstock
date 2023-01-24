@@ -1,5 +1,5 @@
 import { useState } from "react"
-import styles from "src/styles/Home.module.css"
+import styles from "src/woodstock/styles/common.module.css"
 import { User, Wood } from "db"
 import StockSection from "src/woodstock/components/stocks/StockSection"
 import CommercialSection from "../commercials/CommercialSection"

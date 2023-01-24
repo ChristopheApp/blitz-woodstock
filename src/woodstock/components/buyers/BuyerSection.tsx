@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-import styles from "src/styles/Home.module.css"
+import styles from "src/woodstock/styles/common.module.css"
 import { User, Buyer } from "@prisma/client"
 import UserBuyerList from "./UserBuyersList"
 import getNotAdminBuyers from "src/woodstock/buyers/queries/getNotAdminBuyers"

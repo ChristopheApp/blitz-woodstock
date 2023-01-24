@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import styles from "src/styles/Home.module.css"
+import styles from "src/woodstock/styles/common.module.css"
 import { User, Supplier, Wood } from "@prisma/client"
 import UserSuppliersList from "./UserSuppliersList"
 import MoreSuppliersList from "./MoreSuppliersList"

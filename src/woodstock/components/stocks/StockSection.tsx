@@ -1,4 +1,5 @@
-import styles from "./stocks.module.css"
+import styles from "src/woodstock/styles/stocks.module.css"
+import stylesCommon from "src/woodstock/styles/common.module.css"
 import { User, Wood } from "@prisma/client"
 import createUserStocks from "src/woodstock/mutations/createUserStock"
 import deleteWood from "src/woodstock/mutations/wood/deleteWood"
@@ -28,7 +29,7 @@ export default function StockSection({ stocks, user, admin }: Props) {
   }
 
   return (
-    <section className={styles.managementSection}>
+    <section className={styles.stockSection}>
       <h2>Stocks</h2>
       <div className={styles.stockContainer}>{displayStocks()}</div>
       <button
