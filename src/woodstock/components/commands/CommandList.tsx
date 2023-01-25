@@ -9,8 +9,6 @@ interface Props {
 }
 
 export default function CommandList({ commands, admin }: Props) {
-  console.log(commands)
-
   const handleClickValid = async (id: string) => {
     console.log("commande validée")
     const result = await acceptCommand(id)

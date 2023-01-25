@@ -4,6 +4,7 @@ import { User, Command, Wood, Supplier } from "@prisma/client"
 import FormNewCommand from "./FormNewCommand"
 import CommandList from "./CommandList"
 import getSuppliersWoodByAdminId from "src/woodstock/wood/queries/getSuppliersWoodByAdminId"
+import getActivesCommands from "src/woodstock/commands/queries/getActivesCommands"
 
 interface Props {
   commands: Command[]
@@ -12,6 +13,7 @@ interface Props {
 }
 
 export default function CommandlSection({ commands, user, admin }: Props) {
+  const [activeCommands, setActiveCommands] = useState<Command[]>([])
   const [displayForm, setDisplayForm] = useState(false)
   const [displayList, setDisplayList] = useState(true)
 
@@ -23,11 +25,18 @@ export default function CommandlSection({ commands, user, admin }: Props) {
 
   useEffect(() => {
     fetchAllWoodsBuyable()
+    fetchActivesCommands()
   }, [])
+
+  const fetchActivesCommands = async () => {
+    console.log("fetchActivesCommands")
+    const result = await getActivesCommands(admin.id)
+    setActiveCommands(result)
+    console.log(result)
+  }
 
   const fetchAllWoodsBuyable = async () => {
     const woods = await getSuppliersWoodByAdminId(admin.id)
-    console.log(woods)
     setWoods(woods)
   }
 

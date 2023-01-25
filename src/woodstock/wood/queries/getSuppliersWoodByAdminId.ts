@@ -13,6 +13,5 @@ export default async function getSuppliersWoodByAdminId(adminId: string) {
       supplier: true,
     },
   })
-  console.log(woods)
   return woods
 }
