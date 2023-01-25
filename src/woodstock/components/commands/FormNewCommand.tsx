@@ -1,15 +1,8 @@
 import { useState } from "react"
 import { FieldValues, useForm } from "react-hook-form"
-
-import { LabeledTextField } from "src/core/components/LabeledTextField"
-import { Form, FORM_ERROR } from "src/core/components/Form"
 import styles from "src/woodstock/styles/common.module.css"
-import addCommercial from "../../mutations/addCommercial"
-import { AddCommercial } from "../../validations"
-import { useMutation } from "@blitzjs/rpc"
 import { Wood, Supplier, User } from "@prisma/client"
 import newCommand from "src/woodstock/mutations/commands/newCommand"
-import { addMinutes } from "blitz"
 
 type ProjectFormValues = FieldValues
 
@@ -40,6 +33,7 @@ export default function FormNewCommand({ woods, admin }: Props) {
       quantity: parseInt(data.quantity),
       wood: selectedWood,
       adminId: admin.id,
+      type: "PURCHASE",
     })
     console.log(result)
   }
