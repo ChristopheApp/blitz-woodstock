@@ -62,7 +62,7 @@ export default function CommandlSection({ commands, user, admin }: Props) {
           <h2>Passer une commande</h2>
         </button>
       </div>
-      {displayList && <CommandList admin={admin} commands={commands} />}
+      {displayList && <CommandList admin={admin} commands={activeCommands} />}
       {displayForm &&
         (woods && woods.length > 0 ? (
           <FormNewCommand admin={admin} woods={woods} />

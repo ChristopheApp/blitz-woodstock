@@ -24,15 +24,15 @@ export default function CommandDisplayer({ command, admin }: Props) {
     console.log(result)
   }
 
-  const handleClickCancel = async (id: string, status: string) => {
+  const handleClickCancel = async (command: Command) => {
     console.log("commande annulée")
-    const result = await cancelCommand(id)
+    const result = await cancelCommand(command)
     console.log(result)
   }
 
-  const handleClickDeliver = async (id: string, status: string) => {
+  const handleClickDeliver = async (command: Command) => {
     console.log("commande livrée")
-    const result = await deliverCommand(id)
+    const result = await deliverCommand(command)
     console.log(result)
   }
 
@@ -66,10 +66,8 @@ export default function CommandDisplayer({ command, admin }: Props) {
         <p>Quantité : {command.quantity} m3</p>
         <p>Prix total : {command.totalPrice} €</p>
         <p>Prix moyen : {command.totalPrice / command.quantity} €/m3 </p>
-        <button onClick={() => handleClickDeliver(command.id, command.status)}>
-          Livraison reçu
-        </button>
-        <button onClick={() => handleClickCancel(command.id, command.status)}>Annuler</button>
+        <button onClick={() => handleClickDeliver(command)}>Livraison reçu</button>
+        <button onClick={() => handleClickCancel(command)}>Annuler</button>
       </li>
     )
   } else if (command.status === "DELIVERED") {
@@ -82,7 +80,7 @@ export default function CommandDisplayer({ command, admin }: Props) {
         <p>Prix total : {command.totalPrice} €</p>
         <p>Prix moyen : {command.totalPrice / command.quantity} €/m3 </p>
         <button onClick={() => handleClickPay(command.id, command.status)}>Payer</button>
-        <button onClick={() => handleClickCancel(command.id, command.status)}>Annuler</button>
+        <button onClick={() => handleClickCancel(command)}>Annuler</button>
       </li>
     )
   } else if (command.status === "PAID") {

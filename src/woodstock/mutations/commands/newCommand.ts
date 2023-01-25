@@ -14,6 +14,7 @@ export default async function newCommand(data: any) {
           woodType: wood.type,
           status: "CREATED",
           supplierId: wood.supplierId,
+          avgPrice: wood.price,
         },
       },
     },

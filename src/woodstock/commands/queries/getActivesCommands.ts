@@ -4,7 +4,7 @@ export default async function getActivesCommands(id: string) {
   const commands = await db.command.findMany({
     where: {
       NOT: {
-        OR: [{ status: "REFUSED" }, { status: "CANCELED" }],
+        OR: [{ status: "REFUSED" }, { status: "CANCELED" }, { status: "PAID" }],
       },
     },
   })

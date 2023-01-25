@@ -24,6 +24,10 @@ const Home: BlitzPage = () => {
 
       <Header />
       <div className={styles.container}>
+        <div>
+          <h1 className={styles.title}>Woodstock</h1>
+        </div>
+
         <Suspense fallback="Loading...">
           <UserInfos />
         </Suspense>

@@ -1,15 +1,11 @@
 import { useState } from "react"
-import styles from "src/woodstock/styles/common.module.css"
 import MainSectionAdmin from "./MainSectionAdmin"
 import MainSectionCommercial from "./MainSectionCommercial"
 import stylesCommon from "src/woodstock/styles/common.module.css"
 import { User, Wood } from "db"
 import StockSection from "src/woodstock/components/stocks/StockSection"
-import CommercialSection from "../commercials/CommercialSection"
 import CommandSection from "../commands/CommandSection"
-import BuyerSection from "../buyers/BuyerSection"
-import SupplierSection from "../suppliers/SupplierSection"
-import ButtonManagementSections from "./ButtonManagementSections"
+import TableList from "src/woodstock/components/commands/TableList"
 
 interface Props {
   currentUserInfos: any
@@ -23,7 +19,6 @@ export default function MainSection({ currentUserInfos, adminMode }: Props) {
 
   return (
     <>
-      <h1 className={styles.title}>Woodstock</h1>
       <div className={stylesCommon.sectionContainer}>
         <StockSection stocks={stocks} user={user} admin={admin} />
 
@@ -37,6 +32,7 @@ export default function MainSection({ currentUserInfos, adminMode }: Props) {
           )}
         </div>
       </div>
+      <TableList commands={commands} />
     </>
   )
 }
