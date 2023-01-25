@@ -14,8 +14,15 @@ import UserInfos from "src/woodstock/components/common/UserInfos"
  * This file is just for a pleasant getting started page for your new app.
  * You can delete everything in here and start from scratch if you like.
  */
+import getCurrentUser from "src/users/queries/getCurrentUser"
+import { gSP } from "src/blitz-server"
 
-const Home: BlitzPage = () => {
+export const getStaticProps = gSP(async ({ params, ctx }) => {
+  const currentUserInfos = await getCurrentUser(null, ctx)
+  return { props: { currentUserInfos } }
+})
+
+const Home: BlitzPage = (props: { currentUserInfos }) => {
   // suppliersInfo()
 
   return (
@@ -25,7 +32,7 @@ const Home: BlitzPage = () => {
       <Header />
       <div className={styles.container}>
         <Suspense fallback="Loading...">
-          <UserInfos />
+          <UserInfos currentUserInfo={props.currentUserInfos} />
         </Suspense>
         <main className={styles.main}>
           <div className={styles.wrapper}>
