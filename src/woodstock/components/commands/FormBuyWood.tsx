@@ -2,7 +2,7 @@ import { useState } from "react"
 import { FieldValues, useForm } from "react-hook-form"
 import styles from "src/woodstock/styles/common.module.css"
 import { Wood, Supplier, User } from "@prisma/client"
-import newCommand from "src/woodstock/mutations/commands/newCommand"
+import newBuyCommand from "src/woodstock/mutations/commands/newBuyCommand"
 
 type ProjectFormValues = FieldValues
 
@@ -29,7 +29,7 @@ export default function FormBuyWood({ woods, admin }: Props) {
     const adminId = admin.id
     console.log(watchQuantity)
     console.log(data)
-    const result = await newCommand({
+    const result = await newBuyCommand({
       quantity: parseInt(data.quantity),
       wood: selectedWood,
       adminId: admin.id,

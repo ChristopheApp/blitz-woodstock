@@ -2,11 +2,12 @@ import { useState, useEffect } from "react"
 import styles from "src/woodstock/styles/common.module.css"
 import { User, Command, Wood, Supplier, Buyer } from "@prisma/client"
 import FormBuyWood from "./FormBuyWood"
-import CommandList from "./CommandList"
+import CommandLists from "./CommandLists"
 import FormSection from "./FormSection"
 import getSuppliersWoodByAdminId from "src/woodstock/wood/queries/getSuppliersWoodByAdminId"
 import getActivesCommands from "src/woodstock/commands/queries/getActivesCommands"
 import type Stocks from "src/woodstock/types/stocks"
+import ListsSection from "./ListsSection"
 
 interface Props {
   commands: Command[]
@@ -15,8 +16,13 @@ interface Props {
   buyers: Buyer[]
 }
 
+interface ActiveCommand {
+  sale: Command[]
+  purchase: Command[]
+}
+
 export default function CommandlSection({ commands, user, admin, buyers }: Props) {
-  const [activeCommands, setActiveCommands] = useState<Command[]>([])
+  const [activeCommands, setActiveCommands] = useState<ActiveCommand>()
   const [displayForm, setDisplayForm] = useState(false)
   const [displayList, setDisplayList] = useState(true)
 
@@ -66,7 +72,7 @@ export default function CommandlSection({ commands, user, admin, buyers }: Props
         </button>
       </div>
 
-      {displayList && <CommandList admin={admin} commands={activeCommands} />}
+      {displayList && activeCommands && <ListsSection admin={admin} commands={activeCommands} />}
       {displayForm &&
         (woods && woods.length > 0 ? (
           <>

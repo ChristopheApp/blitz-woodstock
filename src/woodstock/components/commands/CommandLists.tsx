@@ -2,13 +2,14 @@ import React from "react"
 import { Command, User } from "@prisma/client"
 import acceptCommand from "src/woodstock/mutations/commands/acceptCommand"
 import CommandDisplayer from "./CommandDisplayer"
+import DisplayCommand from "./DisplayCommand"
 
 interface Props {
   commands: Command[]
   admin: User
 }
 
-export default function CommandList({ commands, admin }: Props) {
+export default function CommandLists({ commands, admin }: Props) {
   const handleClickValid = async (id: string) => {
     console.log("commande validée")
     const result = await acceptCommand(id)
@@ -20,12 +21,11 @@ export default function CommandList({ commands, admin }: Props) {
   }
 
   const displayCommands = commands.map((command) => {
-    return <CommandDisplayer key={command.id} admin={admin} command={command} />
+    return <DisplayCommand key={command.id} admin={admin} command={command} />
   })
 
   return (
     <>
-      <h3>Liste des commandes</h3>
       <ul>{displayCommands}</ul>
     </>
   )

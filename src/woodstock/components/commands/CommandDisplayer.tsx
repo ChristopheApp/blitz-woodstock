@@ -46,12 +46,11 @@ export default function CommandDisplayer({ command, admin }: Props) {
     return (
       <>
         <li>
-          <p>Type : {command.type}</p>
           <p>Etat : Devis en attente </p>
           <p>Bois : {command.woodType} </p>
+          <p>Prix moyen : {command.totalPrice / command.quantity} €/m3 </p>
           <p>Quantité : {command.quantity} m3</p>
           <p>Prix total : {command.totalPrice} €</p>
-          <p>Prix moyen : {command.totalPrice / command.quantity} €/m3 </p>
           <button onClick={() => handleClickValid(command.id)}>Valider</button>
           <button onClick={() => handleClickRefuse(command.id)}>Refuser</button>
         </li>
