@@ -1,18 +1,21 @@
 import { useState, useEffect } from "react"
 import styles from "src/woodstock/styles/common.module.css"
-import { User, Command, Wood, Supplier } from "@prisma/client"
-import FormNewCommand from "./FormNewCommand"
+import { User, Command, Wood, Supplier, Buyer } from "@prisma/client"
+import FormBuyWood from "./FormBuyWood"
 import CommandList from "./CommandList"
+import FormSection from "./FormSection"
 import getSuppliersWoodByAdminId from "src/woodstock/wood/queries/getSuppliersWoodByAdminId"
 import getActivesCommands from "src/woodstock/commands/queries/getActivesCommands"
+import type Stocks from "src/woodstock/types/stocks"
 
 interface Props {
   commands: Command[]
   user: User
   admin: User
+  buyers: Buyer[]
 }
 
-export default function CommandlSection({ commands, user, admin }: Props) {
+export default function CommandlSection({ commands, user, admin, buyers }: Props) {
   const [activeCommands, setActiveCommands] = useState<Command[]>([])
   const [displayForm, setDisplayForm] = useState(false)
   const [displayList, setDisplayList] = useState(true)
@@ -56,16 +59,19 @@ export default function CommandlSection({ commands, user, admin }: Props) {
     <section className={styles.managementSection}>
       <div className={styles.ongletCommand}>
         <button onClick={handleClickList} className={styles.ongletTitle}>
-          <h2>Liste des commandes</h2>
+          <h2>Commandes en cours</h2>
         </button>
         <button onClick={handleClickForm} className={styles.ongletTitle}>
           <h2>Passer une commande</h2>
         </button>
       </div>
+
       {displayList && <CommandList admin={admin} commands={activeCommands} />}
       {displayForm &&
         (woods && woods.length > 0 ? (
-          <FormNewCommand admin={admin} woods={woods} />
+          <>
+            <FormSection buyers={buyers} admin={admin} woods={woods} />
+          </>
         ) : (
           <p>Vous n'avez aucun fournisseur qui propose du bois actuellement.</p>
         ))}

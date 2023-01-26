@@ -13,7 +13,7 @@ interface Props {
   })[]
 }
 
-export default function FormNewCommand({ woods, admin }: Props) {
+export default function FormBuyWood({ woods, admin }: Props) {
   const [selectedWood, setSelectedWood] = useState(woods[0])
 
   const {
@@ -46,9 +46,9 @@ export default function FormNewCommand({ woods, admin }: Props) {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(submitHandler)}>
-      <h3>Acheter du bois</h3>
       <label>Type de bois</label>
       <select
+        required
         className=""
         id="wood"
         defaultValue={""}

@@ -65,12 +65,43 @@
   font-style: italic;
 }
 
+.formSelector {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  gap: 1rem;
+}
+
+.titleFormSelected {
+  background-image: radial-gradient(
+    95.63% 95.63% at 95.92% 0%,
+    rgba(255, 255, 255, 0.62) 0%,
+    #8155ff38 60.42%,
+    #002fff5c 169%
+  );
+  border-radius: 15px;
+  padding: 0.5rem;
+}
+
 .form {
   display: flex;
   flex-direction: column;
   gap: 1rem;
   padding: 1rem;
-  max-width: 50%;
+}
+
+.formWrapperInputs {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  width: 100%;
+}
+
+.formInputs {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 50%;
 }
 
 .ongletTitle {
