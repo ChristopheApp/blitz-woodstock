@@ -7,53 +7,70 @@ import deliverCommand from "src/woodstock/mutations/commands/deliverCommand"
 import payCommand from "src/woodstock/mutations/commands/payCommand"
 
 interface Props {
-  command: Command
-  admin: User
+  oneCommand: Command
 }
 
-export default function DisplayCommand({ command, admin }: Props) {
+export default function DisplayCommand({ oneCommand }: Props) {
+  const [command, setCommand] = useState<Command>(oneCommand)
   const [commandStatus, setCommandStatus] = useState("Devis en attente")
   const [textButtonValid, setTextButtonValid] = useState("Valider")
   const [textButtonRefuse, setTextButtonRefuse] = useState("Refuser")
-  const [displayButtonValid, setDisplayButtonValid] = useState(true)
-  const [displayButtonRefuse, setDisplayButtonRefuse] = useState(true)
 
-  let ButtonValid = () => (
-    <button onClick={() => handleClickValid(command.id)}>{textButtonValid}</button>
-  )
-
-  const ButtonRefuse = () => (
-    <button onClick={() => handleClickRefuse(command.id)}>{textButtonRefuse}</button>
-  )
   const handleClickValid = async (id: string) => {
-    console.log("commande validée")
-    const result = await acceptCommand(id)
-    console.log(result)
+    // TODO : add if statement to check status
+    if (command.status === "ACCEPTED") {
+      console.log("commande livrée")
+      const result = await deliverCommand(command)
+      console.log(result)
+      setCommand(result)
+    } else if (command.status === "DELIVERED") {
+      console.log("commande payée")
+      const result = await payCommand(id)
+      console.log(result)
+      setCommand(result)
+    } else {
+      console.log("commande validée")
+      const result = await acceptCommand(id)
+      console.log(result)
+      setCommand(result)
+    }
   }
 
   const handleClickRefuse = async (id: string) => {
-    console.log("commande refusée")
-    const result = await refuseCommand(id)
-    console.log(result)
+    // TODO : add if statement to check status
+    if (command.status === "CREATED") {
+      console.log("commande refusée")
+      const result = await refuseCommand(id)
+      console.log(result)
+      setCommand(result)
+    } else {
+      console.log("commande annulée")
+      const result = await cancelCommand(command)
+      console.log(result)
+      setCommand(result)
+    }
   }
 
-  const handleClickCancel = async (command: Command) => {
-    console.log("commande annulée")
-    const result = await cancelCommand(command)
-    console.log(result)
-  }
+  // const handleClickCancel = async (command: Command) => {
+  //   console.log("commande annulée")
+  //   const result = await cancelCommand(command)
+  //   console.log(result)
+  //   setCommand(result)
+  // }
 
-  const handleClickDeliver = async (command: Command) => {
-    console.log("commande livrée")
-    const result = await deliverCommand(command)
-    console.log(result)
-  }
+  // const handleClickDeliver = async (command: Command) => {
+  //   console.log("commande livrée")
+  //   const result = await deliverCommand(command)
+  //   console.log(result)
+  //   setCommand(result)
+  // }
 
-  const handleClickPay = async (id: string, status: string) => {
-    console.log("commande payée")
-    const result = await payCommand(id)
-    console.log(result)
-  }
+  // const handleClickPay = async (id: string, status: string) => {
+  //   console.log("commande payée")
+  //   const result = await payCommand(id)
+  //   console.log(result)
+  //   setCommand(result)
+  // }
 
   useEffect(() => {
     if (command.status === "ACCEPTED") {
@@ -62,7 +79,7 @@ export default function DisplayCommand({ command, admin }: Props) {
       setTextButtonRefuse("Annuler la commande")
     } else if (command.status === "DELIVERED") {
       setCommandStatus("Livrée, en attente de paiement")
-      setTextButtonValid("Payer")
+      setTextButtonValid("Commande payée")
       setTextButtonRefuse("Annuler la commande")
     }
     // else if (command.status === "PAID") {
@@ -81,7 +98,7 @@ export default function DisplayCommand({ command, admin }: Props) {
     //     setDisplayButtonRefuse(false)
 
     // }
-  }, [])
+  }, [command.status])
 
   return (
     <>
@@ -91,8 +108,8 @@ export default function DisplayCommand({ command, admin }: Props) {
         <p>Prix moyen : {command.totalPrice / command.quantity} €/m3 </p>
         <p>Quantité : {command.quantity} m3</p>
         <p>Prix total : {command.totalPrice} €</p>
-        {displayButtonValid && <ButtonValid />}
-        {displayButtonRefuse && <ButtonRefuse />}
+        <button onClick={() => handleClickValid(command.id)}>{textButtonValid}</button>
+        <button onClick={() => handleClickRefuse(command.id)}>{textButtonRefuse}</button>
       </li>
     </>
   )

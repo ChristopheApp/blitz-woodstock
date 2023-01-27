@@ -89,7 +89,6 @@ export default async function cancelCommand(command: Command) {
         },
       })
       // Need to include stocks and if quantity of wood is 0, delete it
-      return user
     }
   }
 

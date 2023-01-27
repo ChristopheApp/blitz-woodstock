@@ -64,7 +64,6 @@ export default async function deliverCommand(command: Command) {
       include: { stocks: true },
     })
     console.log(user)
-    return user
   } else {
     const user = await db.user.update({
       where: { id: command.userId },
@@ -80,7 +79,6 @@ export default async function deliverCommand(command: Command) {
       include: { stocks: true },
     })
     console.log(user)
-    return user
   }
-  // return result
+  return result
 }

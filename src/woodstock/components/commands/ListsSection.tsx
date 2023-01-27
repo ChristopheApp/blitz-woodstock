@@ -30,10 +30,16 @@ export default function ListsSection({ commands, admin }: Props) {
   return (
     <>
       <div className={styles.formSelector}>
-        <h3 className={displayListBuy ? styles.titleFormSelected : ""} onClick={handleClickBuy}>
+        <h3
+          className={displayListBuy ? styles.titleFormSelected : styles.pointer}
+          onClick={handleClickBuy}
+        >
           Achats
         </h3>
-        <h3 className={displayListSell ? styles.titleFormSelected : ""} onClick={handleClickSell}>
+        <h3
+          className={displayListSell ? styles.titleFormSelected : styles.pointer}
+          onClick={handleClickSell}
+        >
           Ventes
         </h3>
       </div>

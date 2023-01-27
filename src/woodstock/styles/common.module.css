@@ -50,6 +50,7 @@
   );
   padding: 0;
   margin-top: 1rem;
+  cursor: pointer;
 }
 .buttonManagement:hover {
   background-color: #8155ff38;
@@ -81,6 +82,11 @@
   );
   border-radius: 15px;
   padding: 0.5rem;
+  cursor: pointer;
+}
+
+.pointer {
+  cursor: pointer;
 }
 
 .form {
@@ -113,7 +119,7 @@
     #002fff5c 169%
   );
   border: 2px solid rgba(0, 0, 0, 0.31);
-
+  cursor: pointer;
   padding: 1rem;
 }
 .ongletTitle:hover {

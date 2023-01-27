@@ -30,10 +30,16 @@ export default function FormSection({ admin, woods, buyers }: Props) {
   return (
     <>
       <div className={styles.formSelector}>
-        <h3 className={displayFormBuy ? styles.titleFormSelected : ""} onClick={handleClickBuy}>
+        <h3
+          className={displayFormBuy ? styles.titleFormSelected : styles.pointer}
+          onClick={handleClickBuy}
+        >
           Acheter du bois
         </h3>
-        <h3 className={displayFormSell ? styles.titleFormSelected : ""} onClick={handleClickSell}>
+        <h3
+          className={displayFormSell ? styles.titleFormSelected : styles.pointer}
+          onClick={handleClickSell}
+        >
           Vendre du bois
         </h3>
       </div>
