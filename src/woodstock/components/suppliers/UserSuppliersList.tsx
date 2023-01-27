@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Supplier, User, Wood } from "@prisma/client"
 import DetailsSupplier from "./DetailsSupplier"
 import stylesSupplier from "src/woodstock/styles/Supplier.module.css"
+import ButtonRemove from "../common/ButtonRemove"
 
 interface Props {
   suppliers: (Supplier & { stock: Wood[] })[]
@@ -23,11 +24,8 @@ export default function UserSuppliersList({ admin, suppliers }: Props) {
   const displaySuppliers = userSuppliers.map((supplier) => {
     return (
       <li className={stylesSupplier.moreSuppliersItems} key={supplier.id}>
-        <p
-          onClick={() => displaySupplierDetails(supplier.id)}
-          className={stylesSupplier.moreSuppliersTitle}
-        >
-          {supplier.name}
+        <p className={stylesSupplier.moreSuppliersTitle}>
+          <ButtonRemove onClick={() => displaySupplierDetails(supplier.id)} /> {supplier.name}
         </p>
         {selectedSupplierId === supplier.id && (
           <DetailsSupplier supplier={supplier} admin={admin} />

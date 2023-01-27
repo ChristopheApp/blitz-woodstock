@@ -4,7 +4,7 @@ import stylesCommon from "src/woodstock/styles/common.module.css"
 import { User, Wood } from "@prisma/client"
 import createUserStocks from "src/woodstock/mutations/createUserStock"
 import deleteWood from "src/woodstock/mutations/wood/deleteWood"
-import getAllValidCommands from "src/woodstock/mutations/commands/getAllValidCommands"
+import getAllValidCommands from "src/woodstock/commands/queries/getAllValidCommands"
 import type Stocks from "src/woodstock/types/stocks"
 import createStocks from "src/woodstock/utils/createStocks"
 

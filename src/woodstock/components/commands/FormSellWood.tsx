@@ -4,7 +4,7 @@ import styles from "src/woodstock/styles/common.module.css"
 import { User, Wood, Supplier, Buyer } from "@prisma/client"
 import newSaleCommand from "src/woodstock/mutations/commands/newSaleCommand"
 import type Stocks from "src/woodstock/types/stocks"
-import getAllValidCommands from "src/woodstock/mutations/commands/getAllValidCommands"
+import getAllValidCommands from "src/woodstock/commands/queries/getAllValidCommands"
 import createStocks from "src/woodstock/utils/createStocks"
 
 type ProjectFormValues = FieldValues

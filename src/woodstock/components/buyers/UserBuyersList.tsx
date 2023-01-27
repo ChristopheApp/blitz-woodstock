@@ -3,6 +3,7 @@ import { useState } from "react"
 import { User, Buyer } from "@prisma/client"
 import stylesBuyer from "src/woodstock/styles/Buyer.module.css"
 import removeBuyerFromAdmin from "src/woodstock/mutations/removeBuyerFromAdmin"
+import ButtonRemove from "../common/ButtonRemove"
 
 interface Props {
   buyers: Buyer[]
@@ -21,8 +22,9 @@ export default function UserBuyerList({ buyers, admin }: Props) {
   const displayBuyers = userBuyers.map((buyer) => {
     return (
       <li className={stylesBuyer.moreSuppliersItems} key={buyer.id}>
-        <p onClick={() => handleremoveBuyer(buyer.id)} className={stylesBuyer.moreSuppliersTitle}>
-          - {buyer.firstname} {buyer.lastname} {buyer.company && `- ${buyer.company}`}
+        <p className={stylesBuyer.moreSuppliersTitle}>
+          <ButtonRemove onClick={() => handleremoveBuyer(buyer.id)} /> - {buyer.firstname}{" "}
+          {buyer.lastname} {buyer.company && `- ${buyer.company}`}
         </p>
       </li>
     )
@@ -30,7 +32,7 @@ export default function UserBuyerList({ buyers, admin }: Props) {
 
   return (
     <div>
-      <h3>Mes fournisseurs</h3>
+      <h3>Mes clients</h3>
       <ul>{displayBuyers}</ul>
     </div>
   )

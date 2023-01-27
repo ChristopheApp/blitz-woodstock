@@ -34,51 +34,51 @@ export default async function deliverCommand(command: Command) {
     }
   }
 
-  /**
-   * If the command is a purchase, we need to update the user's stocks
-   *
-   */
-  const wood = await db.wood.findFirst({
-    where: { type: command.woodType, userId: command.userId },
-  })
+  // /** DONT NEED THIS
+  //  * If the command is a purchase, we need to update the user's stocks
+  //  *
+  //  */
+  // const wood = await db.wood.findFirst({
+  //   where: { type: command.woodType, userId: command.userId },
+  // })
 
-  if (wood) {
-    const user = await db.user.update({
-      where: { id: command.userId },
-      data: {
-        stocks: {
-          upsert: {
-            where: { id: wood.id },
-            update: {
-              quantity: wood.quantity + command.quantity,
-              price: wood.price + command.totalPrice,
-            },
-            create: {
-              quantity: command.quantity,
-              type: command.woodType,
-              price: command.totalPrice,
-            },
-          },
-        },
-      },
-      include: { stocks: true },
-    })
-    console.log(user)
-  } else {
-    const user = await db.user.update({
-      where: { id: command.userId },
-      data: {
-        stocks: {
-          create: {
-            quantity: command.quantity,
-            type: command.woodType,
-            price: command.totalPrice,
-          },
-        },
-      },
-      include: { stocks: true },
-    })
-    console.log(user)
-  }
+  // if (wood) {
+  //   const user = await db.user.update({
+  //     where: { id: command.userId },
+  //     data: {
+  //       stocks: {
+  //         upsert: {
+  //           where: { id: wood.id },
+  //           update: {
+  //             quantity: wood.quantity + command.quantity,
+  //             price: wood.price + command.totalPrice,
+  //           },
+  //           create: {
+  //             quantity: command.quantity,
+  //             type: command.woodType,
+  //             price: command.totalPrice,
+  //           },
+  //         },
+  //       },
+  //     },
+  //     include: { stocks: true },
+  //   })
+  //   console.log(user)
+  // } else {
+  //   const user = await db.user.update({
+  //     where: { id: command.userId },
+  //     data: {
+  //       stocks: {
+  //         create: {
+  //           quantity: command.quantity,
+  //           type: command.woodType,
+  //           price: command.totalPrice,
+  //         },
+  //       },
+  //     },
+  //     include: { stocks: true },
+  //   })
+  //   console.log(user)
+  // }
   return result
 }

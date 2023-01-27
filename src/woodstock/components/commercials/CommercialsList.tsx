@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { User } from "@prisma/client"
 import removeCommercialFromAdmin from "src/woodstock/mutations/removeCommercial"
+import ButtonRemove from "../common/ButtonRemove"
 
 interface Props {
   commercials: User[]
@@ -22,8 +23,9 @@ export default function CommercialsList({ admin, commercials }: Props) {
       <h3>Mes commerciaux</h3>
       <ul>
         {userCommercials.map((commercial) => (
-          <li key={commercial.id} onClick={() => removeCommercial(commercial.id)}>
-            {commercial.name} - {commercial.email}
+          <li key={commercial.id}>
+            <ButtonRemove onClick={() => removeCommercial(commercial.id)} />
+            {commercial.email} {commercial.name && ` - ${commercial.name}`}
           </li>
         ))}
       </ul>
