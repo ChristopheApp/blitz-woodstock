@@ -7,7 +7,7 @@ export default resolver.pipe(
   resolver.zod(AddCommercial),
   async ({ email, password, adminId }, ctx) => {
     const hashedPassword = await SecurePassword.hash(password.trim())
-    const user = await db.user.create({
+    const commercial = await db.user.create({
       data: {
         email: email.toLowerCase().trim(),
         hashedPassword,
@@ -17,13 +17,14 @@ export default resolver.pipe(
       select: { id: true, name: true, email: true, role: true },
     })
 
-    await db.user.update({
+    const user = await db.user.update({
       where: { id: adminId },
       data: {
         commercialsId: {
-          push: user.id,
+          push: commercial.id,
         },
       },
+      include: { commercials: true },
     })
     return user
   }

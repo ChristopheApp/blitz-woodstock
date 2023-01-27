@@ -4,10 +4,12 @@ import addCommercial from "../../mutations/addCommercial"
 import { AddCommercial } from "../../validations"
 import { useMutation } from "@blitzjs/rpc"
 import styles from "src/woodstock/styles/common.module.css"
+import { User } from "@prisma/client"
 
 type AddCommercialFormProps = {
   onSuccess?: () => void
   adminId: string
+  onCallback?: (commercials: User[]) => void
 }
 
 export const AddCommercialForm = (props: AddCommercialFormProps) => {
@@ -26,8 +28,9 @@ export const AddCommercialForm = (props: AddCommercialFormProps) => {
         initialValues={{ email: "", password: "", adminId: props.adminId }}
         onSubmit={async (values) => {
           try {
-            await addCommercialMutation(values)
+            const result = await addCommercialMutation(values)
             props.onSuccess?.()
+            props.onCallback?.(result.commercials)
           } catch (error: any) {
             if (error.code === "P2002" && error.meta?.target?.includes("email")) {
               // This error comes from Prisma
