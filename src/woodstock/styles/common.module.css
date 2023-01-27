@@ -25,6 +25,7 @@
   flex-direction: column;
   padding: 1rem;
   width: 50%;
+  gap: 2rem;
 }
 
 .managementSection {
@@ -38,6 +39,7 @@
 .ongletCommand {
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
   gap: 1rem;
 }
 
@@ -127,4 +129,13 @@
 }
 .ongletTitle:after {
   background-color: #8155ff38;
+}
+
+.linkAllCmd {
+  text-decoration: underline;
+  color: rgb(26, 64, 236);
+}
+
+.tableList {
+  padding: 1rem;
 }

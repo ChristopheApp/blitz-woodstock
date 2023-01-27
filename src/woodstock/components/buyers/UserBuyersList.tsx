@@ -23,7 +23,7 @@ export default function UserBuyerList({ buyers, admin }: Props) {
     return (
       <li className={stylesBuyer.moreSuppliersItems} key={buyer.id}>
         <p className={stylesBuyer.moreSuppliersTitle}>
-          <ButtonRemove onClick={() => handleremoveBuyer(buyer.id)} /> - {buyer.firstname}{" "}
+          <ButtonRemove onClick={() => handleremoveBuyer(buyer.id)} /> {buyer.firstname}{" "}
           {buyer.lastname} {buyer.company && `- ${buyer.company}`}
         </p>
       </li>

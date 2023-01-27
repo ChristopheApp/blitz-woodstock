@@ -10,7 +10,6 @@
 .stockSection {
   display: flex;
   flex-direction: column;
-  max-width: 50%;
 }
 
 .stockContainer {

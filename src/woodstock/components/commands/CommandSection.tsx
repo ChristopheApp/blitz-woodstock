@@ -72,7 +72,9 @@ export default function CommandlSection({ commands, user, admin, buyers }: Props
         </button>
       </div>
 
-      {displayList && activeCommands && <ListsSection admin={admin} commands={activeCommands} />}
+      {displayList && activeCommands && (
+        <ListsSection user={user} admin={admin} commands={activeCommands} />
+      )}
       {displayForm &&
         (woods && woods.length > 0 ? (
           <>

@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { User } from "@prisma/client"
+import stylesBuyer from "src/woodstock/styles/Buyer.module.css"
 import removeCommercialFromAdmin from "src/woodstock/mutations/removeCommercial"
 import ButtonRemove from "../common/ButtonRemove"
 
@@ -23,9 +24,11 @@ export default function CommercialsList({ admin, commercials }: Props) {
       <h3>Mes commerciaux</h3>
       <ul>
         {userCommercials.map((commercial) => (
-          <li key={commercial.id}>
-            <ButtonRemove onClick={() => removeCommercial(commercial.id)} />
-            {commercial.email} {commercial.name && ` - ${commercial.name}`}
+          <li key={commercial.id} className={stylesBuyer.moreSuppliersItems}>
+            <p className={stylesBuyer.moreSuppliersTitle}>
+              <ButtonRemove onClick={() => removeCommercial(commercial.id)} />
+              {commercial.email} {commercial.name && ` - ${commercial.name}`}
+            </p>
           </li>
         ))}
       </ul>

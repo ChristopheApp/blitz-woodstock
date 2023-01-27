@@ -29,6 +29,7 @@ export default function MainSection({ currentUserInfos }: Props) {
   return (
     <>
       <div className={stylesCommon.managementSection}>
+        <h2>Administration</h2>
         <ButtonManagementSections
           onClick={() => setShowSuppliers(!showSuppliers)}
           text="Liste des fournisseurs"
@@ -41,10 +42,10 @@ export default function MainSection({ currentUserInfos }: Props) {
         />
         {showBuyers && <BuyerSection admin={admin} buyers={buyers} />}
 
-        <ButtonManagementSections
+        {/* <ButtonManagementSections
           onClick={() => setShowCommands(!showCommands)}
           text="Liste des commandes"
-        />
+        /> */}
         {/* {showCommands && <CommandSection user={user} admin={admin} />} */}
 
         <ButtonManagementSections

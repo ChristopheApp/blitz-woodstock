@@ -21,6 +21,9 @@ import DeleteIcon from "@mui/icons-material/Delete"
 import FilterListIcon from "@mui/icons-material/FilterList"
 import { visuallyHidden } from "@mui/utils"
 import { Command } from "@prisma/client"
+import styles from "src/woodstock/styles/common.module.css"
+import formatCommandStatus from "src/woodstock/utils/formatCommandStatus"
+import formatCommandType from "src/woodstock/utils/formatCommandType"
 
 // interface Data {
 //   calories: number;
@@ -343,7 +346,7 @@ export default function TableList({ commands }: Props) {
   const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box className={styles.tableList} sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
         <EnhancedTableToolbar numSelected={selected.length} />
         <TableContainer>
@@ -389,8 +392,8 @@ export default function TableList({ commands }: Props) {
                       <TableCell component="th" id={labelId} scope="row" padding="none">
                         {row.createdAt.toLocaleString()}
                       </TableCell>
-                      <TableCell align="left">{row.type}</TableCell>
-                      <TableCell align="left">{row.status}</TableCell>
+                      <TableCell align="left">{formatCommandType(row.type)}</TableCell>
+                      <TableCell align="left">{formatCommandStatus(row.status)}</TableCell>
                       <TableCell align="left">{row.updatedAt.toLocaleDateString()}</TableCell>
                       <TableCell align="left">{row.woodType}</TableCell>
                       <TableCell align="right">{row.quantity}</TableCell>
