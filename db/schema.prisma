@@ -27,7 +27,7 @@ model User {
   admin     User?   @relation("adminSalereps", fields: [adminId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   salesreps User[]  @relation("adminSalereps")
 
-  salerepId String[] @db.ObjectId
+  salesrepsId String[] @db.ObjectId
 
   orders Order[] @relation("userOrders")
   // commandsId String[]  @db.ObjectId

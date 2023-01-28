@@ -1,21 +1,21 @@
 import db, { Supplier } from "db"
 
-export default async function removeCommercialFromAdmin({ commercialId, adminId }) {
+export default async function removeSalesrepFromAdmin({ salesrepId, adminId }) {
   let user: any
   user = await db.user.update({
     where: { id: adminId },
     data: {
-      commercials: {
+      salesreps: {
         disconnect: {
-          id: commercialId,
+          id: salesrepId,
         },
       },
     },
-    include: { commercials: true },
+    include: { salesreps: true },
   })
 
   await db.user.delete({
-    where: { id: commercialId },
+    where: { id: salesrepId },
   })
 
   return user

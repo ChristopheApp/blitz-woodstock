@@ -1,8 +1,8 @@
 import db from "db"
 
-const getBuyers = async (_ = null) => {
-  const buyers = await db.buyer.findMany()
-  return buyers
+const getCustomers = async (_ = null) => {
+  const customers = await db.customer.findMany()
+  return customers
 }
 
-export default getBuyers
+export default getCustomers

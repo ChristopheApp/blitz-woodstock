@@ -1,22 +1,22 @@
 import { LabeledTextField } from "src/core/components/LabeledTextField"
 import { Form, FORM_ERROR } from "src/core/components/Form"
-import addCommercial from "../../mutations/addSalesrep"
-import { AddCommercial } from "../../validations"
+import addSalesrep from "../../mutations/addSalesrep"
+import { AddSalesrep } from "../../validations"
 import { useMutation } from "@blitzjs/rpc"
 import styles from "src/woodstock/styles/common.module.css"
 import { User } from "@prisma/client"
 
-type AddCommercialFormProps = {
+type AddSalesrepFormProps = {
   onSuccess?: () => void
   adminId: string
   onCallback?: (salesreps: User[]) => void
 }
 
-export const AddCommercialForm = (props: AddCommercialFormProps) => {
-  const [addCommercialMutation] = useMutation(addCommercial)
+export const AddSalesrepForm = (props: AddSalesrepFormProps) => {
+  const [addSalesrepMutation] = useMutation(addSalesrep)
   return (
     <div>
-      <h3>Ajouter un Commercial</h3>
+      <h3>Ajouter un commercial</h3>
       <p className={styles.description}>
         Vous pouvez créer des comptes pour vos commerciaux. Il faut une addresse mail et un mot de
         passe.
@@ -24,11 +24,11 @@ export const AddCommercialForm = (props: AddCommercialFormProps) => {
 
       <Form
         submitText="Ajouter"
-        schema={AddCommercial}
+        schema={AddSalesrep}
         initialValues={{ email: "", password: "", adminId: props.adminId }}
         onSubmit={async (values) => {
           try {
-            const result = await addCommercialMutation(values)
+            const result = await addSalesrepMutation(values)
             props.onSuccess?.()
             props.onCallback?.(result.salesreps)
           } catch (error: any) {
@@ -48,4 +48,4 @@ export const AddCommercialForm = (props: AddCommercialFormProps) => {
   )
 }
 
-export default AddCommercialForm
+export default AddSalesrepForm

@@ -11,7 +11,7 @@ export const password = z
   .max(100)
   .transform((str) => str.trim())
 
-export const AddCommercial = z.object({
+export const AddSalesrep = z.object({
   email,
   password,
   adminId: z.string(),

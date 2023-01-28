@@ -1,17 +1,17 @@
 import { SecurePassword } from "@blitzjs/auth"
 import { resolver } from "@blitzjs/rpc"
 import db from "db"
-import { AddCommercial } from "../validations"
+import { AddSalesrep } from "../validations"
 
 export default resolver.pipe(
-  resolver.zod(AddCommercial),
+  resolver.zod(AddSalesrep),
   async ({ email, password, adminId }, ctx) => {
     const hashedPassword = await SecurePassword.hash(password.trim())
-    const commercial = await db.user.create({
+    const salesrep = await db.user.create({
       data: {
         email: email.toLowerCase().trim(),
         hashedPassword,
-        role: "COMMERCIAL",
+        role: "SALESREP",
         adminId: adminId,
       },
       select: { id: true, name: true, email: true, role: true },
@@ -20,11 +20,11 @@ export default resolver.pipe(
     const user = await db.user.update({
       where: { id: adminId },
       data: {
-        commercialsId: {
-          push: commercial.id,
+        salesrepsId: {
+          push: salesrep.id,
         },
       },
-      include: { commercials: true },
+      include: { salesreps: true },
     })
     return user
   }

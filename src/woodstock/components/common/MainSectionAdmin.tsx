@@ -1,7 +1,7 @@
 import { useState } from "react"
 import stylesCommon from "src/woodstock/styles/common.module.css"
 import { User, Wood } from "db"
-import CommercialSection from "../salesreps/CommercialSection"
+import CommercialSection from "../salesreps/SalesrepSection"
 import OrderSection from "../orders/OrderSection"
 import CustomerSection from "../customer/CustomerSection"
 import SupplierSection from "../suppliers/SupplierSection"
@@ -12,19 +12,19 @@ interface Props {
   user?: User | null
   admin?: User | null
   stocks?: Wood[]
-  // commercials?: Commercial[]
+  // salesreps?: Commercial[]
   // orders?: Order[]
   // customers?: Customer[]
   // suppliers?: Supplier[]
 }
 
 export default function MainSection({ currentUserInfos }: Props) {
-  const { user, admin, commercials, orders, stocks, suppliers, customers } = currentUserInfos
+  const { user, admin, salesreps, orders, stocks, suppliers, customers } = currentUserInfos
 
   const [showSuppliers, setShowSuppliers] = useState(false)
   const [showCustomers, setShowCustomers] = useState(false)
   const [showOrders, setShowOrders] = useState(false)
-  const [showCommercials, setShowCommercials] = useState(false)
+  const [showSalesreps, setShowSalesreps] = useState(false)
 
   return (
     <>
@@ -49,12 +49,10 @@ export default function MainSection({ currentUserInfos }: Props) {
         {/* {showOrders && <OrderSection user={user} admin={admin} />} */}
 
         <ButtonManagementSections
-          onClick={() => setShowCommercials(!showCommercials)}
+          onClick={() => setShowSalesreps(!showSalesreps)}
           text="Liste des commerciaux"
         >
-          {showCommercials && (
-            <CommercialSection user={user} admin={admin} commercials={commercials} />
-          )}
+          {showSalesreps && <CommercialSection user={user} admin={admin} salesreps={salesreps} />}
         </ButtonManagementSections>
       </div>
     </>
