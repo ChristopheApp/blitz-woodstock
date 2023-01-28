@@ -7,9 +7,10 @@ import styles from "src/woodstock/styles/common.module.css"
 interface Props {
   supplier: Supplier & { stock: Wood[] }
   admin: User
+  stranger: boolean
 }
 
-export default function DetailsSupplier({ supplier, admin }: Props) {
+export default function DetailsSupplier({ supplier, admin, stranger }: Props) {
   const adminId = admin.id
   const supplierId = supplier.id
 
@@ -45,7 +46,7 @@ export default function DetailsSupplier({ supplier, admin }: Props) {
       <p className={styles.description}>les stocks actuel du fournisseur : </p>
       {stocks}
       <button onClick={handleClick}>
-        {supplier.userId ? "Retirer ce fournisseur" : "Ajouter ce fournisseur"}
+        {!stranger ? "Retirer ce fournisseur" : "Ajouter ce fournisseur"}
       </button>
     </>
   )

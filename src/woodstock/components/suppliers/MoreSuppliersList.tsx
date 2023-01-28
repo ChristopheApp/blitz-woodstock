@@ -27,7 +27,9 @@ export default function MoreSuppliersList({ admin, moreSuppliers }: Props) {
       >
         {supplier.name}
       </p>
-      {selectedSupplierId === supplier.id && <DetailsSupplier supplier={supplier} admin={admin} />}
+      {selectedSupplierId === supplier.id && (
+        <DetailsSupplier stranger={true} supplier={supplier} admin={admin} />
+      )}
     </li>
   ))
 
