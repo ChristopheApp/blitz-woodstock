@@ -1,29 +1,26 @@
 import { useState } from "react"
 import MainSectionAdmin from "./MainSectionAdmin"
 import MainSectionCommercial from "./MainSectionCommercial"
-import stylesCommon from "src/woodstock/styles/common.module.css"
+import styles from "src/woodstock/styles/common.module.css"
 import StockSection from "src/woodstock/components/stocks/StockSection"
-import CommandSection from "../commands/CommandSection"
+import OrderSection from "../orders/OrderSection"
 
 interface Props {
   currentUserInfos: any
-  adminMode: boolean
 }
 
-export default function MainSection({ currentUserInfos, adminMode }: Props) {
-  const { user, admin, commercials, commands, suppliers, buyers } = currentUserInfos
-
-  const [isAdmin, setIsAdmin] = useState(true)
+export default function MainSection({ currentUserInfos }: Props) {
+  const { user, admin, salesreps, orders, suppliers, customers, isAdmin } = currentUserInfos
 
   return (
     <>
-      <div className={stylesCommon.sectionContainer}>
-        <div className={stylesCommon.rightSection}>
+      <div className={styles.sectionContainer}>
+        <div className={styles.rightSection}>
           <StockSection admin={admin} />
           {isAdmin && <MainSectionAdmin currentUserInfos={currentUserInfos} />}
         </div>
-        <div className={stylesCommon.rightSection}>
-          <CommandSection buyers={buyers} commands={commands} user={user} admin={admin} />
+        <div className={styles.rightSection}>
+          <OrderSection customers={customers} orders={orders} user={user} admin={admin} />
 
           {/* {isAdmin ? (
             <MainSectionAdmin currentUserInfos={currentUserInfos} />

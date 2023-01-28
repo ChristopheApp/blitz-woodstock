@@ -7,23 +7,25 @@ export default async function getCurrentUser(_ = null, { session }: Ctx) {
 
   const user = await db.user.findFirst({
     where: { id: session.userId },
-    include: { commercials: true, commands: true, stocks: true, suppliers: true, buyers: true },
+    include: { salesreps: true, orders: true, stock: true, suppliers: true, customers: true },
   })
 
+  let isAdmin = true
   let admin = user
 
-  if (user?.role === "COMMERCIAL") {
+  if (user?.role === "SALESREP") {
     admin = await db.user.findFirst({
       where: { id: user.adminId as string },
-      include: { commercials: true, commands: true, stocks: true, suppliers: true, buyers: true },
+      include: { salesreps: true, orders: true, stock: true, suppliers: true, customers: true },
     })
+    isAdmin = false
   }
 
-  const commercials = admin?.commercials
-  const commands = admin?.commands
-  const stocks = admin?.stocks
+  const salesreps = admin?.salesreps
+  const orders = admin?.orders
+  const stock = admin?.stock
   const suppliers = admin?.suppliers
-  const buyers = admin?.buyers
+  const customers = admin?.customers
 
-  return { user, admin, commercials, commands, stocks, suppliers, buyers }
+  return { user, admin, salesreps, orders, stock, suppliers, customers, isAdmin }
 }

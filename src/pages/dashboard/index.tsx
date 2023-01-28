@@ -7,7 +7,7 @@ import logout from "src/auth/mutations/logout"
 import { useMutation } from "@blitzjs/rpc"
 import { useCurrentUser, useUserAdmin, useUserCommercials } from "src/users/hooks/useCurrentUser"
 import Header from "src/core/components/Header"
-import AddCommercialForm from "src/woodstock/components/commercials/AddCommercialForm"
+import AddCommercialForm from "src/woodstock/components/salesreps/AddCommercialForm"
 
 const UserCommercialInfos = () => {
   const currentUser = useCurrentUser()

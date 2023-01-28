@@ -6,9 +6,10 @@ import stylesSupplier from "src/woodstock/styles/Supplier.module.css"
 interface Props {
   admin: User
   moreSuppliers: (Supplier & { stock: Wood[] })[]
+  handleAddSupplier: (supplierId: string) => void
 }
 
-export default function MoreSuppliersList({ admin, moreSuppliers }: Props) {
+export default function MoreSuppliersList({ admin, moreSuppliers, handleAddSupplier }: Props) {
   const [selectedSupplierId, setSelectedSupplierId] = useState<string>()
 
   const displaySupplierDetails = (supplierId: string) => {
@@ -28,7 +29,12 @@ export default function MoreSuppliersList({ admin, moreSuppliers }: Props) {
         {supplier.name}
       </p>
       {selectedSupplierId === supplier.id && (
-        <DetailsSupplier stranger={true} supplier={supplier} admin={admin} />
+        <DetailsSupplier
+          onClickProps={handleAddSupplier}
+          stranger={true}
+          supplier={supplier}
+          admin={admin}
+        />
       )}
     </li>
   ))

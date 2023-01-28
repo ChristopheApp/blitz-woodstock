@@ -8,9 +8,10 @@ interface Props {
   supplier: Supplier & { stock: Wood[] }
   admin: User
   stranger: boolean
+  onClickProps: (supplierId: string) => void
 }
 
-export default function DetailsSupplier({ supplier, admin, stranger }: Props) {
+export default function DetailsSupplier({ supplier, admin, stranger, onClickProps }: Props) {
   const adminId = admin.id
   const supplierId = supplier.id
 
@@ -18,7 +19,7 @@ export default function DetailsSupplier({ supplier, admin, stranger }: Props) {
     return (
       <div key={stock.id}>
         <p>
-          {stock.quantity} m³ de <strong>{stock.type}</strong> {stock.price}€/m³
+          {stock.quantityPurchased} m³ de <strong>{stock.type}</strong> {stock.unitPrice}€/m³
         </p>
       </div>
     )
@@ -35,11 +36,12 @@ export default function DetailsSupplier({ supplier, admin, stranger }: Props) {
   }
 
   const handleClick = async () => {
-    if (supplier.userId) {
-      await removeSupplierFromAdmin({ supplierId, adminId })
-    } else {
-      await addSupplierToAdmin({ supplierId, adminId })
-    }
+    onClickProps(supplierId)
+    // if (!stranger) {
+    //   await removeSupplierFromAdmin({ supplierId, adminId })
+    // } else {
+    //   await addSupplierToAdmin({ supplierId, adminId })
+    // }
   }
   return (
     <>

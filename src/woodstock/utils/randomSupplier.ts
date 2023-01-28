@@ -49,7 +49,6 @@ export default function randomSupplier() {
     name: supplierName,
     email: `randomemail@supplier.com`,
     phone: `0123456789`,
-    // stock: [],
   }
   return supplier
 }

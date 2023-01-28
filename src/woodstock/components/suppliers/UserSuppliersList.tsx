@@ -8,9 +8,10 @@ import removeSupplierFromAdmin from "src/woodstock/mutations/removeSupplierFromA
 interface Props {
   suppliers: (Supplier & { stock: Wood[] })[]
   admin: User
+  handleRemoveSupplier: (supplierId: string) => void
 }
 
-export default function UserSuppliersList({ admin, suppliers }: Props) {
+export default function UserSuppliersList({ admin, suppliers, handleRemoveSupplier }: Props) {
   const [userSuppliers, setUserSuppliers] = useState<(Supplier & { stock: Wood[] })[]>(suppliers)
   const [selectedSupplierId, setSelectedSupplierId] = useState<string>()
 
@@ -39,7 +40,12 @@ export default function UserSuppliersList({ admin, suppliers }: Props) {
           <ButtonRemove onClick={() => removeSupplier(supplier.id)} /> {supplier.name}
         </p>
         {selectedSupplierId === supplier.id && (
-          <DetailsSupplier stranger={false} supplier={supplier} admin={admin} />
+          <DetailsSupplier
+            onClickProps={handleRemoveSupplier}
+            stranger={false}
+            supplier={supplier}
+            admin={admin}
+          />
         )}
       </li>
     )

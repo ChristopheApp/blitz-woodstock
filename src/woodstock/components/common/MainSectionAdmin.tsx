@@ -1,9 +1,9 @@
 import { useState } from "react"
 import stylesCommon from "src/woodstock/styles/common.module.css"
 import { User, Wood } from "db"
-import CommercialSection from "../commercials/CommercialSection"
-import CommandSection from "../commands/CommandSection"
-import BuyerSection from "../buyers/BuyerSection"
+import CommercialSection from "../salesreps/CommercialSection"
+import CommandSection from "../orders/OrderSection"
+import BuyerSection from "../customer/CustomerSection"
 import SupplierSection from "../suppliers/SupplierSection"
 import ButtonManagementSections from "./ButtonManagementSections"
 
