@@ -1,38 +1,39 @@
-import { useState, useEffect } from "react"
 import { BlitzPage } from "@blitzjs/next"
 import Layout from "src/core/layouts/Layout"
 import TableList from "src/woodstock/components/commands/TableList"
-import { Command, User } from "db"
-import { useCurrentUser } from "src/users/hooks/useCurrentUser"
+import { SessionContext } from "@blitzjs/auth"
+import getCurrentUser from "src/users/queries/getCurrentUser"
+import { gSSP } from "src/blitz-server"
 
-const userInfos = async () => {
-  const currentUserInfo = useCurrentUser()
-
-  return <></>
+type Props = {
+  userId: unknown
+  publicData: SessionContext["$publicData"]
+  userInfos: any
 }
 
-const CommandsPage: BlitzPage = () => {
-  const currentUserInfo = useCurrentUser()
+export const getServerSideProps = gSSP<Props>(async ({ ctx }) => {
+  const { session } = ctx
+  const currentUserInfo = await getCurrentUser(null, ctx)
 
-  const [commands, setCommands] = useState<Command[]>([])
-  const [user, setUser] = useState<User>()
+  return {
+    props: {
+      userId: session.userId,
+      publicData: session.$publicData,
+      publishedAt: new Date(0),
+      userInfos: currentUserInfo,
+    },
+  }
+})
 
-  useEffect(() => {
-    if (currentUserInfo && currentUserInfo.commands) {
-      setCommands(currentUserInfo.commands)
-    }
-
-    if (currentUserInfo && currentUserInfo.user) {
-      setUser(currentUserInfo.user)
-    }
-  }, [currentUserInfo])
+const CommandsPage: BlitzPage = (props: Props) => {
+  const currentUserInfo = props.userInfos
 
   if (!currentUserInfo) {
     return <div>loading...</div>
-  } else if (user?.role === "ADMIN") {
+  } else if (currentUserInfo.user?.role === "ADMIN") {
     return (
       <Layout title="Commands">
-        <TableList commands={commands} />
+        <TableList commands={currentUserInfo.commands} />
       </Layout>
     )
   } else {
