@@ -8,16 +8,34 @@ import generateBuyers from "src/woodstock/mutations/common/generateBuyers"
 import deleteAllBuyers from "src/woodstock/mutations/common/deleteAllBuyers"
 import fetchSuppliers from "src/woodstock/suppliers/queries/getSuppliers"
 import createUserStocks from "src/woodstock/mutations/createUserStock"
-
+import MainSection from "src/woodstock/components/common/MainSection"
 import UserInfos from "src/woodstock/components/common/UserInfos"
-/*
- * This file is just for a pleasant getting started page for your new app.
- * You can delete everything in here and start from scratch if you like.
- */
 
-const Home: BlitzPage = () => {
-  // suppliersInfo()
+import { SessionContext } from "@blitzjs/auth"
+import getCurrentUser from "src/users/queries/getCurrentUser"
+import { gSSP } from "src/blitz-server"
 
+type Props = {
+  userId: unknown
+  publicData: SessionContext["$publicData"]
+  userInfos: any
+}
+
+export const getServerSideProps = gSSP<Props>(async ({ ctx }) => {
+  const { session } = ctx
+  const currentUserInfo = await getCurrentUser(null, ctx)
+
+  return {
+    props: {
+      userId: session.userId,
+      publicData: session.$publicData,
+      publishedAt: new Date(0),
+      userInfos: currentUserInfo,
+    },
+  }
+})
+
+const Home: BlitzPage = (props: Props) => {
   return (
     <Layout title="Home">
       <div className={styles.globe} />
@@ -28,8 +46,10 @@ const Home: BlitzPage = () => {
           <h1 className={styles.title}>Woodstock</h1>
         </div>
 
+        {/* <MainSection adminMode={adminMode} currentUserInfos={currentUserInfo} /> */}
+
         <Suspense fallback="Loading...">
-          <UserInfos />
+          <UserInfos userInfos={props.userInfos} />
         </Suspense>
         <main className={styles.main}>
           <div className={styles.wrapper}>

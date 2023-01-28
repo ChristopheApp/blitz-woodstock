@@ -24,7 +24,7 @@ import { Command } from "@prisma/client"
 import styles from "src/woodstock/styles/common.module.css"
 import formatCommandStatus from "src/woodstock/utils/formatCommandStatus"
 import formatCommandType from "src/woodstock/utils/formatCommandType"
-
+import formatDate from "src/woodstock/utils/formatDate"
 // interface Data {
 //   calories: number;
 //   carbs: number;
@@ -390,11 +390,11 @@ export default function TableList({ commands }: Props) {
                         />
                       </TableCell>
                       <TableCell component="th" id={labelId} scope="row" padding="none">
-                        {row.createdAt.toLocaleString()}
+                        {new Date(row.createdAt).toLocaleString()}
                       </TableCell>
                       <TableCell align="left">{formatCommandType(row.type)}</TableCell>
                       <TableCell align="left">{formatCommandStatus(row.status)}</TableCell>
-                      <TableCell align="left">{row.updatedAt.toLocaleDateString()}</TableCell>
+                      <TableCell align="left">{new Date(row.updatedAt).toLocaleString()}</TableCell>
                       <TableCell align="left">{row.woodType}</TableCell>
                       <TableCell align="right">{row.quantity}</TableCell>
                       <TableCell align="right">{row.avgPrice}</TableCell>
