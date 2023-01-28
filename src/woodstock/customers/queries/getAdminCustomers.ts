@@ -1,11 +1,11 @@
 import db from "db"
 
-const getAdminBuyers = async (adminId: string) => {
-  const buyers = await db.buyer.findMany({
-    where: { userId: adminId },
+const getAdminCustomers = async (adminId: string) => {
+  const customers = await db.customer.findMany({
+    where: { userId: { has: adminId } },
   })
-  console.log(buyers)
-  return buyers
+  console.log(customers)
+  return customers
 }
 
-export default getAdminBuyers
+export default getAdminCustomers

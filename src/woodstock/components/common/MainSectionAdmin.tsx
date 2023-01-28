@@ -2,8 +2,8 @@ import { useState } from "react"
 import stylesCommon from "src/woodstock/styles/common.module.css"
 import { User, Wood } from "db"
 import CommercialSection from "../salesreps/CommercialSection"
-import CommandSection from "../orders/OrderSection"
-import BuyerSection from "../customer/CustomerSection"
+import OrderSection from "../orders/OrderSection"
+import CustomerSection from "../customer/CustomerSection"
 import SupplierSection from "../suppliers/SupplierSection"
 import ButtonManagementSections from "./ButtonManagementSections"
 
@@ -13,17 +13,17 @@ interface Props {
   admin?: User | null
   stocks?: Wood[]
   // commercials?: Commercial[]
-  // commands?: Command[]
-  // buyers?: Buyer[]
+  // orders?: Order[]
+  // customers?: Customer[]
   // suppliers?: Supplier[]
 }
 
 export default function MainSection({ currentUserInfos }: Props) {
-  const { user, admin, commercials, commands, stocks, suppliers, buyers } = currentUserInfos
+  const { user, admin, commercials, orders, stocks, suppliers, customers } = currentUserInfos
 
   const [showSuppliers, setShowSuppliers] = useState(false)
-  const [showBuyers, setShowBuyers] = useState(false)
-  const [showCommands, setShowCommands] = useState(false)
+  const [showCustomers, setShowCustomers] = useState(false)
+  const [showOrders, setShowOrders] = useState(false)
   const [showCommercials, setShowCommercials] = useState(false)
 
   return (
@@ -37,16 +37,16 @@ export default function MainSection({ currentUserInfos }: Props) {
         {showSuppliers && <SupplierSection admin={admin} />}
 
         <ButtonManagementSections
-          onClick={() => setShowBuyers(!showBuyers)}
+          onClick={() => setShowCustomers(!showCustomers)}
           text="Liste des clients"
         />
-        {showBuyers && <BuyerSection admin={admin} buyers={buyers} />}
+        {showCustomers && <CustomerSection admin={admin} customers={customers} />}
 
         {/* <ButtonManagementSections
-          onClick={() => setShowCommands(!showCommands)}
-          text="Liste des commandes"
+          onClick={() => setShowOrders(!showOrders)}
+          text="Liste des orderes"
         /> */}
-        {/* {showCommands && <CommandSection user={user} admin={admin} />} */}
+        {/* {showOrders && <OrderSection user={user} admin={admin} />} */}
 
         <ButtonManagementSections
           onClick={() => setShowCommercials(!showCommercials)}

@@ -27,27 +27,24 @@ export default function CustomerSection({ customers, admin }: Props) {
     setDisplayNewCustomers(!displayNewCustomers)
   }
 
-  if (userCustomers) {
-    return (
-      <section className={styles.managementSubMenu}>
-        {userCustomers.length <= 0 ? (
-          <h3>Vous n'avez pas de client</h3>
-        ) : (
-          <UserCustomerList admin={admin} customers={customers} />
-        )}
-
-        <button onClick={fetchCustomers}>
-          {displayNewCustomers ? "Masquer les clients" : "Afficher plus de clients"}
-        </button>
-
-        {displayNewCustomers && <MoreCustomersList admin={admin} moreCustomers={moreCustomers} />}
-      </section>
-    )
-  } else {
-    return (
-      <section className={styles.managementSubMenu}>
+  return (
+    <section className={styles.managementSubMenu}>
+      {userCustomers.length <= 0 ? (
         <h3>Vous n'avez pas de client</h3>
-      </section>
-    )
-  }
+      ) : (
+        <UserCustomerList admin={admin} customers={customers} />
+      )}
+
+      <button onClick={fetchCustomers}>
+        {displayNewCustomers ? "Masquer les clients" : "Afficher plus de clients"}
+      </button>
+
+      {displayNewCustomers && <MoreCustomersList admin={admin} moreCustomers={moreCustomers} />}
+    </section>
+  )
+  return (
+    <section className={styles.managementSubMenu}>
+      <h3>Vous n'avez pas de client</h3>
+    </section>
+  )
 }

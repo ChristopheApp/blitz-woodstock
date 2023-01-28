@@ -1,29 +1,39 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import { User, Customer } from "@prisma/client"
-import stylesBuyer from "src/woodstock/styles/Customer.module.css"
-import removeBuyerFromAdmin from "src/woodstock/mutations/removeCustomerFromAdmin"
+import stylesCustomer from "src/woodstock/styles/Customer.module.css"
+import removeCustomerFromAdmin from "src/woodstock/mutations/removeCustomerFromAdmin"
 import ButtonRemove from "../common/ButtonRemove"
+import getAdminCustomers from "src/woodstock/customers/queries/getAdminCustomers"
 
 interface Props {
   customers: Customer[]
   admin: User
 }
 
-export default function UserBuyerList({ customers, admin }: Props) {
-  const [userBuyers, setUserBuyers] = useState<Customer[]>(customers)
+export default function UserCustomerList({ customers, admin }: Props) {
+  const [userCustomers, setUserCustomers] = useState<Customer[]>([])
 
-  const handleremoveBuyer = async (buyerId: string) => {
+  useEffect(() => {
+    const fetchCustomers = async () => {
+      const result = await getAdminCustomers(admin.id)
+      setUserCustomers(result)
+    }
+    fetchCustomers()
+  }, [])
+
+  const handleremoveCustomer = async (customerId: string) => {
     const adminId = admin.id
-    const result = await removeBuyerFromAdmin({ buyerId, adminId })
+    const result = await removeCustomerFromAdmin({ customerId, adminId })
     console.log(result)
+    setUserCustomers(result.customers)
   }
 
-  const displayBuyers = userBuyers.map((customer) => {
+  const displayCustomers = userCustomers.map((customer) => {
     return (
-      <li className={stylesBuyer.moreSuppliersItems} key={customer.id}>
-        <p className={stylesBuyer.moreSuppliersTitle}>
-          <ButtonRemove onClick={() => handleremoveBuyer(customer.id)} /> {customer.firstname}{" "}
+      <li className={stylesCustomer.moreSuppliersItems} key={customer.id}>
+        <p className={stylesCustomer.moreSuppliersTitle}>
+          <ButtonRemove onClick={() => handleremoveCustomer(customer.id)} /> {customer.firstname}{" "}
           {customer.lastname} {customer.company && `- ${customer.company}`}
         </p>
       </li>
@@ -33,7 +43,7 @@ export default function UserBuyerList({ customers, admin }: Props) {
   return (
     <div>
       <h3>Mes clients</h3>
-      <ul>{displayBuyers}</ul>
+      <ul>{displayCustomers}</ul>
     </div>
   )
 }

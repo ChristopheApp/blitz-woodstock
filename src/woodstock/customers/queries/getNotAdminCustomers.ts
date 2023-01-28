@@ -1,14 +1,17 @@
 import db from "db"
 
-const getNotAdminBuyers = async (adminId: string) => {
-  console.log("getNotAdminBuyers")
+const getNotAdminCustomers = async (adminId: string) => {
+  console.log("getNotAdminCustomers")
   console.log(adminId)
-  const buyers = await db.buyer.findMany()
+  const customers = await db.customer.findMany({
+    where: {
+      NOT: {
+        userId: { has: adminId },
+      },
+    },
+  })
 
-  const newArray = buyers.filter((e) => e.userId !== adminId)
-  console.log(newArray)
-
-  return newArray
+  return customers
 }
 
-export default getNotAdminBuyers
+export default getNotAdminCustomers

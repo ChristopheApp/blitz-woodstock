@@ -1,17 +1,17 @@
 import db from "db"
 
-export default async function removeSupplierFromAdmin({ buyerId, adminId }) {
+export default async function removeSupplierFromAdmin({ customerId, adminId }) {
   let user: any
   user = await db.user.update({
     where: { id: adminId },
     data: {
-      buyers: {
+      customers: {
         disconnect: {
-          id: buyerId,
+          id: customerId,
         },
       },
     },
-    include: { buyers: true },
+    include: { customers: true },
   })
 
   return user

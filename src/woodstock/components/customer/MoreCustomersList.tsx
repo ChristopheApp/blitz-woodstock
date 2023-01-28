@@ -3,6 +3,7 @@ import { User, Customer } from "@prisma/client"
 import ButtonAdd from "../common/ButtonAdd"
 import stylesCustomer from "src/woodstock/styles/Customer.module.css"
 import addCustomerToAdmin from "src/woodstock/mutations/addCustomerToAdmin"
+import getNotAdminCustomers from "src/woodstock/customers/queries/getNotAdminCustomers"
 
 interface Props {
   admin: User
@@ -10,13 +11,17 @@ interface Props {
 }
 
 export default function MoreCustomersList({ admin, moreCustomers }: Props) {
+  const [customers, setCustomers] = useState<Customer[]>(moreCustomers)
+
   const handleAddCustomer = async (customerId: string) => {
     const adminId = admin.id
-    const result = await addCustomerToAdmin({ customerId, adminId })
-    console.log(result)
+    await addCustomerToAdmin({ customerId, adminId }).then(async () => {
+      const result = await getNotAdminCustomers(adminId)
+      setCustomers(result)
+    })
   }
 
-  const displaySuppliers = moreCustomers.map((customer) => (
+  const displaySuppliers = customers.map((customer) => (
     <li className={stylesCustomer.moreSuppliersItems} key={customer.id}>
       <p className={stylesCustomer.moreSuppliersTitle}>
         <ButtonAdd onClick={() => handleAddCustomer(customer.id)} /> {customer.firstname}{" "}

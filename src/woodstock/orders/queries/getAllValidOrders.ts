@@ -1,10 +1,10 @@
 import db from "db"
 
 export default async function getAllValidCommands(adminId: string) {
-  const purchaseCommands = await db.command.findMany({
+  const purchaseCommands = await db.order.findMany({
     where: {
       userId: adminId,
-      type: "PURCHASE",
+      orderType: "PURCHASE",
       OR: [{ status: "DELIVERED" }, { status: "PAID" }],
     },
     select: {
@@ -14,10 +14,10 @@ export default async function getAllValidCommands(adminId: string) {
     },
   })
 
-  const saleCommands = await db.command.findMany({
+  const saleCommands = await db.order.findMany({
     where: {
       userId: adminId,
-      type: "SALE",
+      orderType: "SALE",
       OR: [{ status: "DELIVERED" }, { status: "PAID" }],
     },
     select: {
