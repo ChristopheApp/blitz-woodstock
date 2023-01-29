@@ -5,12 +5,15 @@ import UserSuppliersList from "./UserSuppliersList"
 import MoreSuppliersList from "./MoreSuppliersList"
 import getNotAdminSuppliers from "src/woodstock/suppliers/queries/getNotAdminSuppliers"
 import getAdminSuppliers from "src/woodstock/suppliers/queries/getAdminSuppliers"
+import addSupplierToAdmin from "src/woodstock/mutations/addSupplierToAdmin"
+import removeSupplierFromAdmin from "src/woodstock/mutations/removeSupplierFromAdmin"
 
 interface Props {
   admin: User
 }
 
 export default function SupplierSection({ admin }: Props) {
+  const adminId = admin.id
   const [userSuppliers, setUserSuppliers] = useState<(Supplier & { stock: Wood[] })[]>([])
   const [moreSuppliers, setMoreSuppliers] = useState<(Supplier & { stock: Wood[] })[]>([])
   const [displayNewSuppliers, setDisplayNewSuppliers] = useState<boolean>(false)
@@ -36,19 +39,39 @@ export default function SupplierSection({ admin }: Props) {
     // });
   }
 
+  const addSupplier = async (supplierId: string) => {
+    const result = await addSupplierToAdmin({ supplierId, adminId })
+    setUserSuppliers(result.suppliers)
+  }
+
+  const removeSupplier = async (supplierId: string) => {
+    removeSupplierFromAdmin({ supplierId, adminId }).then(fetchSuppliers)
+    // console.log(result)
+  }
+
   return (
     <section className={styles.managementSubMenu}>
       {userSuppliers.length <= 0 ? (
         <h3>Vous n'avez pas de fournisseur</h3>
       ) : (
-        <UserSuppliersList admin={admin} suppliers={userSuppliers} />
+        <UserSuppliersList
+          handleRemoveSupplier={removeSupplier}
+          admin={admin}
+          suppliers={userSuppliers}
+        />
       )}
 
       <button onClick={fetchSuppliers}>
         {displayNewSuppliers ? "Masquer les fournisseurs" : "Afficher plus de fournisseurs"}
       </button>
 
-      {displayNewSuppliers && <MoreSuppliersList admin={admin} moreSuppliers={moreSuppliers} />}
+      {displayNewSuppliers && (
+        <MoreSuppliersList
+          handleAddSupplier={addSupplier}
+          admin={admin}
+          moreSuppliers={moreSuppliers}
+        />
+      )}
     </section>
   )
 }

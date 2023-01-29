@@ -1,16 +1,16 @@
-import type ValidCommand from "../types/validCommand"
+import type ValidOrder from "../types/validOrder"
 import type Stocks from "../types/stocks"
-import transformArrayCommand from "./transformArrayCommand"
+import transformArrayOrder from "./transformArrayOrder"
 
 /**
- * Create stocks from commands
+ * Create stocks from orders
  */
 export default function createStocks(
-  purchaseCommands: ValidCommand[],
-  saleCommands: ValidCommand[]
+  purchaseOrders: ValidOrder[],
+  saleOrders: ValidOrder[]
 ): Stocks[] {
-  const woodsPurchased = transformArrayCommand(purchaseCommands)
-  const woodsSold = transformArrayCommand(saleCommands)
+  const woodsPurchased = transformArrayOrder(purchaseOrders)
+  const woodsSold = transformArrayOrder(saleOrders)
 
   let stocks: Stocks[] = []
 

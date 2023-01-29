@@ -21,22 +21,22 @@ model User {
   email          String   @unique
   hashedPassword String?
   role           String   @default("ADMIN")
-  stocks         Wood[]
+  stock          Wood[]
 
-  adminId     String? @db.ObjectId
-  admin       User?   @relation("adminCommercials", fields: [adminId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  commercials User[]  @relation("adminCommercials")
+  adminId   String? @db.ObjectId
+  admin     User?   @relation("adminSalereps", fields: [adminId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  salesreps User[]  @relation("adminSalereps")
 
-  commercialsId String[] @db.ObjectId
+  salesrepsId String[] @db.ObjectId
 
-  commands   Command[] @relation("userCommands")
-  commandsId String[]  @db.ObjectId
+  orders Order[] @relation("userOrders")
+  // commandsId String[]  @db.ObjectId
 
-  suppliers Supplier[] @relation("userSuppliers")
-  // suppliersId String[]   @db.ObjectId
+  suppliers   Supplier[] @relation("userSuppliers", fields: [suppliersId], references: [id])
+  suppliersId String[]   @db.ObjectId
 
-  buyers Buyer[] @relation("userBuyers")
-  //buyersId String[] @db.ObjectId
+  customers   Customer[] @relation("userCustomers", fields: [customersId], references: [id])
+  customersId String[]   @db.ObjectId
 
   tokens   Token[]
   sessions Session[]
@@ -84,11 +84,11 @@ model Supplier {
 
   stock Wood[]
 
-  user   User?   @relation("userSuppliers", fields: [userId], references: [id])
-  userId String? @db.ObjectId
+  user   User[]   @relation("userSuppliers", fields: [userId], references: [id])
+  userId String[] @default([]) @db.ObjectId
 }
 
-model Buyer {
+model Customer {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -98,19 +98,22 @@ model Buyer {
   email     String?
   company   String?
 
-  user   User?   @relation("userBuyers", fields: [userId], references: [id])
-  userId String? @db.ObjectId
+  user   User[]   @relation("userCustomers", fields: [userId], references: [id])
+  userId String[] @default([]) @db.ObjectId
 
   @@unique([firstname, lastname])
 }
 
 model Wood {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  type      String
-  price     Int
-  quantity  Int
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  type                String
+  quantityPurchased   Int      @default(0)
+  totalPurchasedPrice Int      @default(0)
+  unitPrice           Int      @default(0)
+  quantitySold        Int      @default(0)
+  totalSoldPrice      Int      @default(0)
 
   user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId String? @db.ObjectId
@@ -122,24 +125,22 @@ model Wood {
   // commandId String?  @db.ObjectId
 }
 
-model Command {
+model Order {
   id         String   @id @default(auto()) @map("_id") @db.ObjectId
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+  orderType  String
+  status     String
+  woodType   String
   quantity   Int
   totalPrice Int
   avgPrice   Int
-  type       String
-  woodType   String
-  status     String
 
-  // wood Wood[]
-
-  user   User   @relation("userCommands", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  user   User   @relation("userOrders", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId String @db.ObjectId
 
   // buyer          Buyer?    @relation(fields: [buyerId], references: [id])
-  buyerId String? @db.ObjectId
+  customerId String? @db.ObjectId
 
   // supplier       Supplier? @relation(fields: [supplierId], references: [id])
   supplierId String? @db.ObjectId
