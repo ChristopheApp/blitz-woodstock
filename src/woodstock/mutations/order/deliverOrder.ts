@@ -2,6 +2,7 @@ import db from "db"
 import { Order } from "@prisma/client"
 import newAdminWood from "../wood/newAdminWood"
 import incAdminWoodPurchased from "../wood/incAdminWoodPurchased"
+import incAdminWoodSold from "../wood/incAdminWoodSold"
 import decSupplierWood from "../wood/decSupplierWood"
 
 export default async function deliverOrder(order: Order) {
@@ -16,13 +17,13 @@ export default async function deliverOrder(order: Order) {
   /**
    * If the order is a purchase, we need to update the supplier's and user's stocks
    */
-  if (order.orderType === "PURCHASE" && order.supplierId) {
-    const quantity = order.quantity
-    const supplierId = order.supplierId
-    const unitPrice = order.avgPrice
-    const woodType = order.woodType
-    const adminId = order.userId
+  const quantity = order.quantity
+  const supplierId = order.supplierId
+  const unitPrice = order.avgPrice
+  const woodType = order.woodType
+  const adminId = order.userId
 
+  if (order.orderType === "PURCHASE" && order.supplierId) {
     // Change supplier stocks
     const supplierWood = await db.wood.findFirst({
       where: { type: order.woodType, supplierId: order.supplierId },
@@ -50,6 +51,14 @@ export default async function deliverOrder(order: Order) {
    * If the order is a sale, we need to update the user's stocks
    */
   if (order.orderType === "SALE") {
+    const adminWood = await db.wood.findFirst({
+      where: { type: order.woodType, userId: order.userId },
+    })
+
+    if (adminWood) {
+      const woodId = adminWood.id
+      const user = await incAdminWoodSold({ quantity, unitPrice, adminId, woodId })
+    }
     /**
      * TODO
      *

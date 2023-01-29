@@ -7,38 +7,41 @@ import deleteWood from "src/woodstock/mutations/wood/deleteWood"
 import getAllValidCommands from "src/woodstock/orders/queries/getAllValidOrders"
 import type Stocks from "src/woodstock/types/stocks"
 import createStocks from "src/woodstock/utils/createStocks"
-
+import getUserStock from "../../queries/getUserStock"
 interface Props {
   admin: User
 }
 
 export default function StockSection({ admin }: Props) {
-  const [stocks, setStocks] = useState<Stocks[]>([])
+  const [stocks, setStocks] = useState<Wood[]>([])
 
   useEffect(() => {
     fetchStocks()
   }, [])
 
   const fetchStocks = async () => {
-    const result = await getAllValidCommands(admin.id)
+    const result = await getUserStock(admin.id)
     console.log("result : ", result)
 
-    const { purchaseCommands, saleCommands } = result
+    const stock = result?.stock
 
-    let stocks: Stocks[] = createStocks(purchaseCommands, saleCommands)
-
-    console.log("stocks : ", stocks)
-    setStocks(stocks)
+    console.log("stocks : ", stock)
+    if (stock) {
+      setStocks(stock)
+    }
   }
 
   const displayStocks = () => {
-    return stocks.map((stock) => {
+    return stocks.map((wood) => {
       return (
-        <div key={stock.woodType} className={styles.stockItems}>
-          <h4>{stock.woodType}</h4>
+        <div key={wood.type} className={styles.stockItems}>
+          <h4>{wood.type}</h4>
           <div>
-            <p>Prix d'achat moyen : {stock.avgPrice} €/m³</p>
-            <p>Quantité en stock : {stock.quantity} m³</p>
+            <p>
+              Prix d'achat moyen : {Math.ceil(wood.totalPurchasedPrice / wood.quantityPurchased)}{" "}
+              €/m³
+            </p>
+            <p>Quantité en stock : {wood.quantityPurchased - wood.quantitySold} m³</p>
           </div>
         </div>
       )

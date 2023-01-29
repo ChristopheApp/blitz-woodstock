@@ -6,7 +6,7 @@ import newSaleCommand from "src/woodstock/mutations/order/newSaleOrder"
 import type Stocks from "src/woodstock/types/stocks"
 import getAllValidCommands from "src/woodstock/orders/queries/getAllValidOrders"
 import createStocks from "src/woodstock/utils/createStocks"
-import getUserStock from "../stock/queries/getUserStock"
+import getUserStock from "../../queries/getUserStock"
 import { date } from "zod"
 
 type ProjectFormValues = FieldValues
@@ -81,40 +81,41 @@ export default function FormSellWood({ admin, customers }: Props) {
           {stocks.map((stock) => (
             <option key={stock.type} style={{ color: "black" }} value={stock.type}>
               {stock.type} - Prix d'achat moyen :{" "}
-              {stock.totalPurchasedPrice / stock.quantityPurchased} €/m³
+              {Math.ceil(stock.totalPurchasedPrice / stock.quantityPurchased)} €/m³
             </option>
           ))}
         </select>
         <div className={styles.formWrapperInputs}>
           <div className={styles.formInputs}>
-            <label>Quantité</label>
+            <label>Quantité (m³)</label>
             <input
               required
               id="quantity"
               type="number"
-              placeholder={"max " + selectedWood.quantityPurchased}
+              placeholder={"max " + (selectedWood.quantityPurchased - selectedWood.quantitySold)}
               {...register("quantity")}
               min={1}
-              max={selectedWood.quantityPurchased}
+              max={selectedWood.quantityPurchased - selectedWood.quantitySold}
             />
           </div>
 
           <div className={styles.formInputs}>
-            <label>Prix au m³</label>
+            <label>Prix de vente (€/m³)</label>
             <input
               required
               id="price"
               type="number"
               placeholder={
-                "min " + selectedWood.totalPurchasedPrice / selectedWood.quantityPurchased
+                "min " +
+                Math.ceil(selectedWood.totalPurchasedPrice / selectedWood.quantityPurchased)
               }
               {...register("price")}
-              min={selectedWood.totalPurchasedPrice / selectedWood.quantityPurchased}
+              min={Math.ceil(selectedWood.totalPurchasedPrice / selectedWood.quantityPurchased)}
             />
           </div>
         </div>
 
-        <label>Prix total : {watchQuantity * watchPrice}€</label>
+        <label>Prix total : {watchQuantity * watchPrice} €</label>
         <label>Sélectionner un acheteur</label>
         <select required className="" id="customer" defaultValue={""} {...register("customer")}>
           {customers.map((customer) => (

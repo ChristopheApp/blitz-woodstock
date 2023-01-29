@@ -1,5 +1,4 @@
 import { useState } from "react"
-
 import styles from "src/woodstock/styles/common.module.css"
 import { User, Customer } from "@prisma/client"
 import UserCustomerList from "./UserCustomersList"

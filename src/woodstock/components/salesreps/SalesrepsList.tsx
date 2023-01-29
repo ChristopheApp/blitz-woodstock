@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { User } from "@prisma/client"
-import styles from "src/woodstock/styles/customer.module.css"
+import styles from "src/woodstock/styles/Customer.module.css"
 import removeSalesrepFromAdmin from "src/woodstock/mutations/removeSalesrep"
 import ButtonRemove from "../common/ButtonRemove"
 
