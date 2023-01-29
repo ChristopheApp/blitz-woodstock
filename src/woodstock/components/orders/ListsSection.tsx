@@ -1,27 +1,18 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import styles from "src/woodstock/styles/common.module.css"
 import { User, Order } from "@prisma/client"
 import OrderLists from "./OrderLists"
 import { Routes } from "@blitzjs/next"
 import Link from "next/link"
 
-interface ActiveOrder {
-  sale: Order[]
-  purchase: Order[]
-}
-
 interface Props {
-  orders: ActiveOrder
   admin: User
   user: User
 }
 
-export default function ListsSection({ orders, admin, user }: Props) {
+export default function ListsSection({ admin, user }: Props) {
   const [displayListBuy, setDisplayListBuy] = useState(true)
   const [displayListSell, setDisplayListSell] = useState(false)
-
-  const purchaseOrders = orders.purchase
-  const saleOrders = orders.sale
 
   const handleClickBuy = () => {
     setDisplayListBuy(true)
@@ -55,8 +46,8 @@ export default function ListsSection({ orders, admin, user }: Props) {
           Ventes
         </h3>
       </div>
-      {displayListBuy && <OrderLists admin={admin} orders={purchaseOrders} />}
-      {displayListSell && <OrderLists admin={admin} orders={saleOrders} />}
+      {displayListBuy && <OrderLists admin={admin} type="PURCHASE" />}
+      {displayListSell && <OrderLists admin={admin} type="SALE" />}
     </>
   )
 }

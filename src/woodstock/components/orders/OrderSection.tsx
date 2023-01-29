@@ -3,23 +3,16 @@ import styles from "src/woodstock/styles/common.module.css"
 import { User, Order, Wood, Supplier, Customer } from "@prisma/client"
 import FormSection from "./FormSection"
 import getSuppliersWoodByAdminId from "src/woodstock/wood/queries/getSuppliersWoodByAdminId"
-import getActivesOrders from "src/woodstock/orders/queries/getActivesOrders"
+import getActivesOrders from "src/woodstock/orders/queries/getActivesPurchaseOrders"
 import ListsSection from "./ListsSection"
 
 interface Props {
-  orders: Order[]
   user: User
   admin: User
   customers: Customer[]
 }
 
-interface ActiveOrder {
-  sale: Order[]
-  purchase: Order[]
-}
-
-export default function OrderSection({ orders, user, admin, customers }: Props) {
-  const [activeOrders, setActiveOrders] = useState<ActiveOrder>({ sale: [], purchase: [] })
+export default function OrderSection({ user, admin, customers }: Props) {
   const [displayForm, setDisplayForm] = useState(false)
   const [displayList, setDisplayList] = useState(true)
 
@@ -31,13 +24,7 @@ export default function OrderSection({ orders, user, admin, customers }: Props) 
 
   useEffect(() => {
     fetchAllWoodsBuyable()
-    fetchActivesOrders()
   }, [])
-
-  const fetchActivesOrders = async () => {
-    const result = await getActivesOrders(admin.id)
-    setActiveOrders(result)
-  }
 
   const fetchAllWoodsBuyable = async () => {
     const woods = await getSuppliersWoodByAdminId(admin.id)
@@ -65,17 +52,12 @@ export default function OrderSection({ orders, user, admin, customers }: Props) 
         </button>
       </div>
 
-      {displayList && activeOrders && (
-        <ListsSection user={user} admin={admin} orders={activeOrders} />
+      {displayList && <ListsSection user={user} admin={admin} />}
+      {displayForm && (
+        <>
+          <FormSection customers={customers} admin={admin} woods={woods} />
+        </>
       )}
-      {displayForm &&
-        (woods && woods.length > 0 ? (
-          <>
-            <FormSection customers={customers} admin={admin} woods={woods} />
-          </>
-        ) : (
-          <p>Vous n'avez aucun fournisseur qui propose du bois actuellement.</p>
-        ))}
     </section>
   )
 }

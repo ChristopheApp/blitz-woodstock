@@ -42,38 +42,42 @@ export default function FormBuyWood({ woods, admin }: Props) {
     setSelectedWood(selectedOption)
   }
 
-  return (
-    <form className={styles.form} onSubmit={handleSubmit(submitHandler)}>
-      <label>Type de bois</label>
-      <select
-        required
-        className=""
-        id="wood"
-        defaultValue={""}
-        {...register("wood")}
-        onChange={handleSelectChange}
-      >
-        {woods.map((wood) => (
-          <option key={wood.id} style={{ color: "black" }} value={wood.id}>
-            {wood.type} - {wood.unitPrice}€/m³ - Max {wood.quantityPurchased}m³
-          </option>
-        ))}
-      </select>
-      <label className={styles.description}>
-        Vendu par <strong>{selectedWood?.supplier?.name}</strong>
-      </label>
-      <label>Quantité</label>
-      <input
-        required
-        id="quantity"
-        type="number"
-        placeholder={"max " + selectedWood?.quantityPurchased}
-        {...register("quantity")}
-        min={1}
-        max={selectedWood?.quantityPurchased}
-      />
-      <label>Prix total : {watchQuantity * (selectedWood?.unitPrice || 0)}€</label>
-      <button type="submit">Commander</button>
-    </form>
-  )
+  if (woods.length > 0) {
+    return (
+      <form className={styles.form} onSubmit={handleSubmit(submitHandler)}>
+        <label>Type de bois</label>
+        <select
+          required
+          className=""
+          id="wood"
+          defaultValue={""}
+          {...register("wood")}
+          onChange={handleSelectChange}
+        >
+          {woods.map((wood) => (
+            <option key={wood.id} style={{ color: "black" }} value={wood.id}>
+              {wood.type} - {wood.unitPrice}€/m³ - Max {wood.quantityPurchased}m³
+            </option>
+          ))}
+        </select>
+        <label className={styles.description}>
+          Vendu par <strong>{selectedWood?.supplier?.name}</strong>
+        </label>
+        <label>Quantité</label>
+        <input
+          required
+          id="quantity"
+          type="number"
+          placeholder={"max " + selectedWood?.quantityPurchased}
+          {...register("quantity")}
+          min={1}
+          max={selectedWood?.quantityPurchased}
+        />
+        <label>Prix total : {watchQuantity * (selectedWood?.unitPrice || 0)}€</label>
+        <button type="submit">Commander</button>
+      </form>
+    )
+  } else {
+    return <h3 className={styles.description}>Aucun bois disponible</h3>
+  }
 }
