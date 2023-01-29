@@ -2,7 +2,7 @@ import { useState } from "react"
 import { FieldValues, useForm } from "react-hook-form"
 import styles from "src/woodstock/styles/common.module.css"
 import { Wood, Supplier, User } from "@prisma/client"
-import newBuyCommand from "src/woodstock/mutations/order/newPurchaseOrder"
+import newPurchaseOrder from "src/woodstock/mutations/order/newPurchaseOrder"
 
 type ProjectFormValues = FieldValues
 
@@ -26,14 +26,16 @@ export default function FormBuyWood({ woods, admin }: Props) {
   const watchQuantity = watch("quantity", 0)
 
   const submitHandler = async (data: any) => {
-    const adminId = admin.id
     console.log(watchQuantity)
     console.log(data)
-    const result = await newBuyCommand({
+    const result = await newPurchaseOrder({
       quantity: parseInt(data.quantity),
-      wood: selectedWood,
+      unitPrice: selectedWood?.unitPrice,
+      woodType: selectedWood?.type,
       adminId: admin.id,
-      type: "PURCHASE",
+      orderType: "PURCHASE",
+      supplierId: selectedWood?.supplierId,
+      woodId: selectedWood?.id,
     })
     console.log(result)
   }
@@ -57,7 +59,7 @@ export default function FormBuyWood({ woods, admin }: Props) {
       >
         {woods.map((wood) => (
           <option key={wood.id} style={{ color: "black" }} value={wood.id}>
-            {wood.type} - {wood.price}€/m³ - Max {wood.quantity}m³
+            {wood.type} - {wood.unitPrice}€/m³ - Max {wood.quantityPurchased}m³
           </option>
         ))}
       </select>
@@ -69,12 +71,12 @@ export default function FormBuyWood({ woods, admin }: Props) {
         required
         id="quantity"
         type="number"
-        placeholder={"max " + selectedWood?.quantity}
+        placeholder={"max " + selectedWood?.quantityPurchased}
         {...register("quantity")}
         min={1}
-        max={selectedWood?.quantity}
+        max={selectedWood?.quantityPurchased}
       />
-      <label>Prix total : {watchQuantity * selectedWood?.price}€</label>
+      <label>Prix total : {watchQuantity * (selectedWood?.unitPrice || 0)}€</label>
       <button type="submit">Commander</button>
     </form>
   )

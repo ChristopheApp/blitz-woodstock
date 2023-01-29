@@ -21,8 +21,8 @@ interface ActiveOrder {
   purchase: Order[]
 }
 
-export default function OrderlSection({ orders, user, admin, customers }: Props) {
-  const [activeOrders, setActiveOrders] = useState<ActiveOrder>()
+export default function OrderSection({ orders, user, admin, customers }: Props) {
+  const [activeOrders, setActiveOrders] = useState<ActiveOrder>({ sale: [], purchase: [] })
   const [displayForm, setDisplayForm] = useState(false)
   const [displayList, setDisplayList] = useState(true)
 
@@ -65,10 +65,10 @@ export default function OrderlSection({ orders, user, admin, customers }: Props)
     <section className={styles.managementSection}>
       <div className={styles.ongletOrder}>
         <button onClick={handleClickList} className={styles.ongletTitle}>
-          <h2>Orderes en cours</h2>
+          <h2>Commandes en cours</h2>
         </button>
         <button onClick={handleClickForm} className={styles.ongletTitle}>
-          <h2>Passer une ordere</h2>
+          <h2>Passer une commande</h2>
         </button>
       </div>
 

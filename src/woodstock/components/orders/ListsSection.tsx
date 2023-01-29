@@ -21,6 +21,9 @@ export default function ListsSection({ orders, admin, user }: Props) {
   const [displayListBuy, setDisplayListBuy] = useState(true)
   const [displayListSell, setDisplayListSell] = useState(false)
 
+  const purchaseOrders = orders.purchase
+  const saleOrders = orders.sale
+
   const handleClickBuy = () => {
     setDisplayListBuy(true)
     setDisplayListSell(false)
@@ -35,9 +38,10 @@ export default function ListsSection({ orders, admin, user }: Props) {
     <>
       {user.role === "ADMIN" && (
         <Link href={Routes.OrdersPage()} className={styles.button}>
-          <h3 className={styles.linkAllCmd}>Toutes les orderes</h3>
+          <h3 className={styles.linkAllCmd}>Toutes les commandes</h3>
         </Link>
       )}
+
       <div className={styles.formSelector}>
         <h3
           className={displayListBuy ? styles.titleFormSelected : styles.pointer}
@@ -52,8 +56,8 @@ export default function ListsSection({ orders, admin, user }: Props) {
           Ventes
         </h3>
       </div>
-      {displayListBuy && <OrderLists admin={admin} orders={orders.purchase} />}
-      {displayListSell && <OrderLists admin={admin} orders={orders.sale} />}
+      {displayListBuy && <OrderLists admin={admin} orders={purchaseOrders} />}
+      {displayListSell && <OrderLists admin={admin} orders={saleOrders} />}
     </>
   )
 }

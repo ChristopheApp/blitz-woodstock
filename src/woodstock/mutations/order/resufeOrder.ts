@@ -5,5 +5,6 @@ export default async function refuseOrder(id: string) {
     where: { id },
     data: { status: "REFUSED" },
   })
+
   return order
 }

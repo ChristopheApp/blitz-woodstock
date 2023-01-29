@@ -1,7 +1,7 @@
 import db from "db"
 
 export default async function newSaleOrder(data: any) {
-  const { quantity, unitPrice, wood, adminId, type, buyerId } = data
+  const { quantity, unitPrice, woodType, adminId, orderType, customerId } = data
 
   const user = await db.user.update({
     where: { id: adminId },
@@ -10,10 +10,10 @@ export default async function newSaleOrder(data: any) {
         create: {
           quantity: quantity,
           totalPrice: quantity * unitPrice,
-          type: type,
-          woodType: wood.woodType,
+          orderType: orderType,
+          woodType: woodType,
           status: "CREATED",
-          buyerId: buyerId,
+          customerId: customerId,
           avgPrice: unitPrice,
         },
       },

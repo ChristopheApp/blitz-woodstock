@@ -1,9 +1,9 @@
 import db from "db"
 
-export default async function getActivesCommands(id: string) {
-  const sale = await db.command.findMany({
+export default async function getActivesOrders(id: string) {
+  const sale = await db.order.findMany({
     where: {
-      type: "SALE",
+      orderType: "SALE",
       userId: id,
       NOT: {
         OR: [{ status: "REFUSED" }, { status: "CANCELED" }, { status: "PAID" }],
@@ -11,9 +11,9 @@ export default async function getActivesCommands(id: string) {
     },
   })
 
-  const purchase = await db.command.findMany({
+  const purchase = await db.order.findMany({
     where: {
-      type: "PURCHASE",
+      orderType: "PURCHASE",
       userId: id,
       NOT: {
         OR: [{ status: "REFUSED" }, { status: "CANCELED" }, { status: "PAID" }],

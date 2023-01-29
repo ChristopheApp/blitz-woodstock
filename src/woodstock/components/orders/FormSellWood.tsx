@@ -6,6 +6,8 @@ import newSaleCommand from "src/woodstock/mutations/order/newSaleOrder"
 import type Stocks from "src/woodstock/types/stocks"
 import getAllValidCommands from "src/woodstock/orders/queries/getAllValidOrders"
 import createStocks from "src/woodstock/utils/createStocks"
+import getUserStock from "../stock/queries/getUserStock"
+import { date } from "zod"
 
 type ProjectFormValues = FieldValues
 
@@ -15,24 +17,25 @@ interface Props {
 }
 
 export default function FormSellWood({ admin, customers }: Props) {
-  const [stocks, setStocks] = useState<Stocks[]>([])
-  const [selectedWood, setSelectedWood] = useState<Stocks>()
+  const [stocks, setStocks] = useState<Wood[]>([])
+  const [selectedWood, setSelectedWood] = useState<Wood>()
 
   useEffect(() => {
     fetchStocks()
   }, [])
 
   const fetchStocks = async () => {
-    const result = await getAllValidCommands(admin.id)
+    const result = await getUserStock(admin.id)
     console.log("result : ", result)
+    const stock = result?.stock
 
-    const { purchaseCommands, saleCommands } = result
+    // let stocks: Stocks[] = createStocks(purchaseCommands, saleCommands)
 
-    let stocks: Stocks[] = createStocks(purchaseCommands, saleCommands)
-
-    console.log("stocks : ", stocks)
-    setStocks(stocks)
-    setSelectedWood(stocks[0])
+    console.log("stocks : ", stock)
+    if (stock) {
+      setStocks(stock)
+      setSelectedWood(stock[0])
+    }
   }
   const {
     register,
@@ -49,16 +52,16 @@ export default function FormSellWood({ admin, customers }: Props) {
     const result = await newSaleCommand({
       quantity: parseInt(data.quantity),
       unitPrice: parseInt(data.price),
-      wood: selectedWood,
+      woodType: data.wood,
       adminId: admin.id,
-      type: "SALE",
+      orderType: "SALE",
       customerId: data.customer,
     })
     console.log(result)
   }
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedOption = stocks.find((w) => w.woodType === event.target.value)
+    const selectedOption = stocks.find((w) => w.type === event.target.value)
     console.log(selectedOption)
     setSelectedWood(selectedOption)
   }
@@ -71,13 +74,14 @@ export default function FormSellWood({ admin, customers }: Props) {
           required
           className=""
           id="wood"
-          defaultValue={selectedWood?.woodType}
+          defaultValue={selectedWood?.type}
           {...register("wood")}
           onChange={handleSelectChange}
         >
           {stocks.map((stock) => (
-            <option key={stock.woodType} style={{ color: "black" }} value={stock.woodType}>
-              {stock.woodType} - Prix d'achat moyen : {stock.avgPrice}€/m³
+            <option key={stock.type} style={{ color: "black" }} value={stock.type}>
+              {stock.type} - Prix d'achat moyen :{" "}
+              {stock.totalPurchasedPrice / stock.quantityPurchased} €/m³
             </option>
           ))}
         </select>
@@ -88,10 +92,10 @@ export default function FormSellWood({ admin, customers }: Props) {
               required
               id="quantity"
               type="number"
-              placeholder={"max " + selectedWood?.quantity}
+              placeholder={"max " + selectedWood.quantityPurchased}
               {...register("quantity")}
               min={1}
-              max={selectedWood?.quantity}
+              max={selectedWood.quantityPurchased}
             />
           </div>
 
@@ -101,9 +105,11 @@ export default function FormSellWood({ admin, customers }: Props) {
               required
               id="price"
               type="number"
-              placeholder={"min " + selectedWood?.avgPrice}
+              placeholder={
+                "min " + selectedWood.totalPurchasedPrice / selectedWood.quantityPurchased
+              }
               {...register("price")}
-              min={selectedWood?.avgPrice}
+              min={selectedWood.totalPurchasedPrice / selectedWood.quantityPurchased}
             />
           </div>
         </div>

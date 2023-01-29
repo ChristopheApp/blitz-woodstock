@@ -4,8 +4,8 @@ export default async function getSuppliersWoodByAdminId(adminId: string) {
   const woods = await db.wood.findMany({
     where: {
       supplier: {
-        user: {
-          id: adminId,
+        userId: {
+          has: adminId,
         },
       },
     },

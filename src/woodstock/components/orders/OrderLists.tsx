@@ -1,7 +1,5 @@
 import React from "react"
 import { Order, User } from "@prisma/client"
-import acceptOrder from "src/woodstock/mutations/order/acceptOrder"
-import OrderDisplayer from "./OrderDisplayer"
 import DisplayOrder from "./DisplayOrder"
 
 interface Props {

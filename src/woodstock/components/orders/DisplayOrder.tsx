@@ -76,11 +76,11 @@ export default function DisplayOrder({ oneOrder }: Props) {
     if (order.status === "ACCEPTED") {
       setOrderStatus("En cours de livraison")
       setTextButtonValid("Livraison reçu")
-      setTextButtonRefuse("Annuler la ordere")
+      setTextButtonRefuse("Annuler la commande")
     } else if (order.status === "DELIVERED") {
       setOrderStatus("Livrée, en attente de paiement")
-      setTextButtonValid("Ordere payée")
-      setTextButtonRefuse("Annuler la ordere")
+      setTextButtonValid("commande payée")
+      setTextButtonRefuse("Annuler la commande")
     }
     // else if (order.status === "PAID") {
     //     setOrderStatus("Complete")
