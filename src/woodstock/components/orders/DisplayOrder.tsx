@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Order, User } from "@prisma/client"
+import { Order } from "@prisma/client"
 import acceptOrder from "src/woodstock/mutations/order/acceptOrder"
 import refuseOrder from "src/woodstock/mutations/order/resufeOrder"
 import cancelOrder from "src/woodstock/mutations/order/cancelOrder"
@@ -19,19 +19,13 @@ export default function DisplayOrder({ oneOrder }: Props) {
   const handleClickValid = async (id: string) => {
     // TODO : add if statement to check status
     if (order.status === "ACCEPTED") {
-      console.log("ordere livrée")
       const result = await deliverOrder(order)
-      console.log(result)
       setOrder(result)
     } else if (order.status === "DELIVERED") {
-      console.log("ordere payée")
       const result = await payOrder(id)
-      console.log(result)
       setOrder(result)
     } else {
-      console.log("ordere validée")
       const result = await acceptOrder(id)
-      console.log(result)
       setOrder(result)
     }
   }
@@ -39,38 +33,13 @@ export default function DisplayOrder({ oneOrder }: Props) {
   const handleClickRefuse = async (id: string) => {
     // TODO : add if statement to check status
     if (order.status === "CREATED") {
-      console.log("ordere refusée")
       const result = await refuseOrder(id)
-      console.log(result)
       setOrder(result)
     } else {
-      console.log("ordere annulée")
       const result = await cancelOrder(order)
-      console.log(result)
       setOrder(result)
     }
   }
-
-  // const handleClickCancel = async (order: Order) => {
-  //   console.log("ordere annulée")
-  //   const result = await cancelOrder(order)
-  //   console.log(result)
-  //   setOrder(result)
-  // }
-
-  // const handleClickDeliver = async (order: Order) => {
-  //   console.log("ordere livrée")
-  //   const result = await deliverOrder(order)
-  //   console.log(result)
-  //   setOrder(result)
-  // }
-
-  // const handleClickPay = async (id: string, status: string) => {
-  //   console.log("ordere payée")
-  //   const result = await payOrder(id)
-  //   console.log(result)
-  //   setOrder(result)
-  // }
 
   useEffect(() => {
     if (order.status === "ACCEPTED") {
@@ -82,22 +51,6 @@ export default function DisplayOrder({ oneOrder }: Props) {
       setTextButtonValid("commande payée")
       setTextButtonRefuse("Annuler la commande")
     }
-    // else if (order.status === "PAID") {
-    //     setOrderStatus("Complete")
-    //     setDisplayButtonValid(false)
-    //     setDisplayButtonRefuse(false)
-
-    // } else if (order.status === "CANCELED") {
-    //     setOrderStatus("Ordere annulée")
-    //     setDisplayButtonValid(false)
-    //     setDisplayButtonRefuse(false)
-
-    // } else if (order.status === "REFUSED") {
-    //     setOrderStatus("Devis refusé")
-    //     setDisplayButtonValid(false)
-    //     setDisplayButtonRefuse(false)
-
-    // }
   }, [order.status])
 
   return (

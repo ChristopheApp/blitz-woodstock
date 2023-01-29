@@ -14,11 +14,8 @@ export default function SalesrepsList({ admin, salesreps }: Props) {
 
   // Use effect to get salesreps from admin and create getSalesrepsFromAdmin function
   const removeSalesrep = async (salesrepId: string) => {
-    console.log(salesrepId)
     const adminId = admin.id
-    console.log(adminId)
     const result = await removeSalesrepFromAdmin({ salesrepId, adminId })
-    console.log(result)
     setUserSalesreps(result.salesreps)
   }
 

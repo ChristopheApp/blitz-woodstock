@@ -25,7 +25,6 @@ export default function UserCustomerList({ customers, admin }: Props) {
   const handleremoveCustomer = async (customerId: string) => {
     const adminId = admin.id
     const result = await removeCustomerFromAdmin({ customerId, adminId })
-    console.log(result)
     setUserCustomers(result.customers)
   }
 

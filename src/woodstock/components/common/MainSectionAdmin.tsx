@@ -2,7 +2,6 @@ import { useState } from "react"
 import stylesCommon from "src/woodstock/styles/common.module.css"
 import { User, Wood } from "db"
 import CommercialSection from "../salesreps/SalesrepSection"
-import OrderSection from "../orders/OrderSection"
 import CustomerSection from "../customer/CustomerSection"
 import SupplierSection from "../suppliers/SupplierSection"
 import ButtonManagementSections from "./ButtonManagementSections"
@@ -12,10 +11,6 @@ interface Props {
   user?: User | null
   admin?: User | null
   stocks?: Wood[]
-  // salesreps?: Commercial[]
-  // orders?: Order[]
-  // customers?: Customer[]
-  // suppliers?: Supplier[]
 }
 
 export default function MainSection({ currentUserInfos }: Props) {

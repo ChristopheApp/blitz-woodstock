@@ -4,10 +4,9 @@ import stylesCommon from "src/woodstock/styles/common.module.css"
 import { User, Wood } from "@prisma/client"
 import createUserStocks from "src/woodstock/mutations/createUserStock"
 import deleteWood from "src/woodstock/mutations/wood/deleteWood"
-import getAllValidCommands from "src/woodstock/orders/queries/getAllValidOrders"
 import type Stocks from "src/woodstock/types/stocks"
 import createStocks from "src/woodstock/utils/createStocks"
-import getUserStock from "../../queries/getUserStock"
+import getUserStock from "../../wood/queries/getUserStock"
 interface Props {
   admin: User
 }
@@ -21,11 +20,9 @@ export default function StockSection({ admin }: Props) {
 
   const fetchStocks = async () => {
     const result = await getUserStock(admin.id)
-    console.log("result : ", result)
 
     const stock = result?.stock
 
-    console.log("stocks : ", stock)
     if (stock) {
       setStocks(stock)
     }

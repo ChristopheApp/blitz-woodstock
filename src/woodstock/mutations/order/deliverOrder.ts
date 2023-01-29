@@ -6,9 +6,6 @@ import incAdminWoodSold from "../wood/incAdminWoodSold"
 import decSupplierWood from "../wood/decSupplierWood"
 
 export default async function deliverOrder(order: Order) {
-  console.log("deliverOrder")
-  console.log(order)
-
   const result = await db.order.update({
     where: { id: order.id },
     data: { status: "DELIVERED" },

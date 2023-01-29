@@ -3,7 +3,6 @@ import styles from "src/woodstock/styles/common.module.css"
 import { User, Customer } from "@prisma/client"
 import UserCustomerList from "./UserCustomersList"
 import getNotAdminCustomers from "src/woodstock/customers/queries/getNotAdminCustomers"
-import getCustomers from "src/woodstock/customers/queries/getCustomers"
 import MoreCustomersList from "./MoreCustomersList"
 
 interface Props {
@@ -20,8 +19,6 @@ export default function CustomerSection({ customers, admin }: Props) {
     if (!displayNewCustomers) {
       const newCustomers = await getNotAdminCustomers(admin.id)
       setMoreCustomers(newCustomers)
-      console.log("new customers")
-      console.log(newCustomers)
     }
     setDisplayNewCustomers(!displayNewCustomers)
   }
@@ -39,11 +36,6 @@ export default function CustomerSection({ customers, admin }: Props) {
       </button>
 
       {displayNewCustomers && <MoreCustomersList admin={admin} moreCustomers={moreCustomers} />}
-    </section>
-  )
-  return (
-    <section className={styles.managementSubMenu}>
-      <h3>Vous n'avez pas de client</h3>
     </section>
   )
 }

@@ -26,8 +26,6 @@ export default function FormBuyWood({ woods, admin }: Props) {
   const watchQuantity = watch("quantity", 0)
 
   const submitHandler = async (data: any) => {
-    console.log(watchQuantity)
-    console.log(data)
     const result = await newPurchaseOrder({
       quantity: parseInt(data.quantity),
       unitPrice: selectedWood?.unitPrice,
@@ -37,12 +35,10 @@ export default function FormBuyWood({ woods, admin }: Props) {
       supplierId: selectedWood?.supplierId,
       woodId: selectedWood?.id,
     })
-    console.log(result)
   }
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedOption = woods.find((w) => w.id === event.target.value)
-    console.log(selectedOption)
     setSelectedWood(selectedOption)
   }
 

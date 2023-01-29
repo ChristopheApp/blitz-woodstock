@@ -30,13 +30,8 @@ export default function SupplierSection({ admin }: Props) {
     if (!displayNewSuppliers) {
       const newSuppliers = await getNotAdminSuppliers(admin.id)
       setMoreSuppliers(newSuppliers)
-      console.log("new suppliers")
-      console.log(newSuppliers)
     }
     setDisplayNewSuppliers(!displayNewSuppliers)
-    // newSuppliers.forEach(element => {
-
-    // });
   }
 
   const addSupplier = async (supplierId: string) => {
@@ -46,7 +41,6 @@ export default function SupplierSection({ admin }: Props) {
 
   const removeSupplier = async (supplierId: string) => {
     removeSupplierFromAdmin({ supplierId, adminId }).then(fetchSuppliers)
-    // console.log(result)
   }
 
   return (

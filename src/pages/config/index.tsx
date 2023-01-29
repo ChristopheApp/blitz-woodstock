@@ -1,13 +1,13 @@
 import Layout from "src/core/layouts/Layout"
 import { BlitzPage } from "@blitzjs/next"
 import styles from "src/styles/Home.module.css"
-import generateSuppliers from "src/woodstock/mutations/common/generateSuppliers"
-import deleteAllSuppliers from "src/woodstock/mutations/common/deleteAllSuppliers"
-import generateBuyers from "src/woodstock/mutations/common/generateCustomers"
-import deleteAllBuyers from "src/woodstock/mutations/common/deleteAllCustomers"
+import generateSuppliers from "src/woodstock/mutations/config/generateSuppliers"
+import deleteAllSuppliers from "src/woodstock/mutations/config/deleteAllSuppliers"
+import generateBuyers from "src/woodstock/mutations/config/generateCustomers"
+import deleteAllBuyers from "src/woodstock/mutations/config/deleteAllCustomers"
 import getAllSuppliers from "src/woodstock/suppliers/queries/getSuppliers"
-import deleteAllUsers from "src/woodstock/mutations/common/deleteAllUsers"
-import cleanAllData from "src/woodstock/mutations/common/cleanAllData"
+import deleteAllUsers from "src/woodstock/mutations/config/deleteAllUsers"
+import cleanAllData from "src/woodstock/mutations/config/cleanAllData"
 
 const Config: BlitzPage = () => {
   // suppliersInfo()

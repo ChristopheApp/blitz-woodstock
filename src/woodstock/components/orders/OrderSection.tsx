@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react"
 import styles from "src/woodstock/styles/common.module.css"
 import { User, Order, Wood, Supplier, Customer } from "@prisma/client"
-import FormBuyWood from "./FormBuyWood"
-import OrderLists from "./OrderLists"
 import FormSection from "./FormSection"
 import getSuppliersWoodByAdminId from "src/woodstock/wood/queries/getSuppliersWoodByAdminId"
 import getActivesOrders from "src/woodstock/orders/queries/getActivesOrders"
-import type Stocks from "src/woodstock/types/stocks"
 import ListsSection from "./ListsSection"
 
 interface Props {
@@ -38,10 +35,8 @@ export default function OrderSection({ orders, user, admin, customers }: Props) 
   }, [])
 
   const fetchActivesOrders = async () => {
-    console.log("fetchActivesOrders")
     const result = await getActivesOrders(admin.id)
     setActiveOrders(result)
-    console.log(result)
   }
 
   const fetchAllWoodsBuyable = async () => {
@@ -50,13 +45,11 @@ export default function OrderSection({ orders, user, admin, customers }: Props) 
   }
 
   const handleClickList = () => {
-    console.log("click list")
     setDisplayList(true)
     setDisplayForm(false)
   }
 
   const handleClickForm = () => {
-    console.log("click form")
     setDisplayList(false)
     setDisplayForm(true)
   }

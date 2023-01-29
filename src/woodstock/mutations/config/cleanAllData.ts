@@ -1,4 +1,4 @@
-import db, { prisma } from "db"
+import db from "db"
 
 export default async function cleanAllData() {
   await db.user.deleteMany({

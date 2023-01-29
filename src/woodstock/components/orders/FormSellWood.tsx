@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from "react"
 import { FieldValues, useForm } from "react-hook-form"
 import styles from "src/woodstock/styles/common.module.css"
-import { User, Wood, Supplier, Customer } from "@prisma/client"
+import { User, Wood, Customer } from "@prisma/client"
 import newSaleCommand from "src/woodstock/mutations/order/newSaleOrder"
-import type Stocks from "src/woodstock/types/stocks"
-import getAllValidCommands from "src/woodstock/orders/queries/getAllValidOrders"
-import createStocks from "src/woodstock/utils/createStocks"
-import getUserStock from "../../queries/getUserStock"
-import { date } from "zod"
+import getUserStock from "../../wood/queries/getUserStock"
 
 type ProjectFormValues = FieldValues
 
@@ -26,12 +22,8 @@ export default function FormSellWood({ admin, customers }: Props) {
 
   const fetchStocks = async () => {
     const result = await getUserStock(admin.id)
-    console.log("result : ", result)
     const stock = result?.stock
 
-    // let stocks: Stocks[] = createStocks(purchaseCommands, saleCommands)
-
-    console.log("stocks : ", stock)
     if (stock) {
       setStocks(stock)
       setSelectedWood(stock[0])
@@ -48,7 +40,6 @@ export default function FormSellWood({ admin, customers }: Props) {
   const watchPrice = watch("price", 0)
 
   const submitHandler = async (data: any) => {
-    console.log(data)
     const result = await newSaleCommand({
       quantity: parseInt(data.quantity),
       unitPrice: parseInt(data.price),
@@ -57,12 +48,10 @@ export default function FormSellWood({ admin, customers }: Props) {
       orderType: "SALE",
       customerId: data.customer,
     })
-    console.log(result)
   }
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedOption = stocks.find((w) => w.type === event.target.value)
-    console.log(selectedOption)
     setSelectedWood(selectedOption)
   }
 

@@ -16,7 +16,6 @@ export default function UserSuppliersList({ admin, suppliers, handleRemoveSuppli
   const [selectedSupplierId, setSelectedSupplierId] = useState<string>()
 
   const displaySupplierDetails = (supplierId: string) => {
-    console.log("click  ")
     if (selectedSupplierId === supplierId) {
       setSelectedSupplierId(undefined)
       return
@@ -27,7 +26,6 @@ export default function UserSuppliersList({ admin, suppliers, handleRemoveSuppli
   const removeSupplier = async (supplierId: string) => {
     const adminId = admin.id
     const result = await removeSupplierFromAdmin({ supplierId, adminId })
-    // console.log(result)
   }
 
   const displaySuppliers = userSuppliers.map((supplier) => {

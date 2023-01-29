@@ -5,7 +5,6 @@ const getAdminSuppliers = async (adminId: string) => {
     where: { userId: { has: adminId } },
     include: { stock: true },
   })
-  console.log(suppliers)
   return suppliers
 }
 

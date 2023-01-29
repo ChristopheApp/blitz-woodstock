@@ -1,8 +1,6 @@
 import db from "db"
 
 const getNotAdminCustomers = async (adminId: string) => {
-  console.log("getNotAdminCustomers")
-  console.log(adminId)
   const customers = await db.customer.findMany({
     where: {
       NOT: {
@@ -10,7 +8,6 @@ const getNotAdminCustomers = async (adminId: string) => {
       },
     },
   })
-
   return customers
 }
 

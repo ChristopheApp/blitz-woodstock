@@ -28,18 +28,5 @@ export default async function newOrder(data: any) {
     },
   })
 
-  // // Change supplier stocks
-  // const supplier = await decSupplierWood({ quantity, supplierId, woodId })
-
-  // Change admin stocks
-  // if (wood) {
-  //   const user = await updateAdminWood({ quantity, unitPrice, adminId, woodId: wood.id })
-  //   console.log("update wood")
-  //   return user
-  // } else {
-  //   const user = await newAdminWood({ quantity, unitPrice, adminId, woodType: woodType })
-  //   console.log("new wood")
-  //   return user
-  // }
   return user
 }

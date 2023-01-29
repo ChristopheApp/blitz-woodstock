@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import styles from "src/woodstock/styles/common.module.css"
-import { User, Wood, Supplier, Customer, Order } from "@prisma/client"
+import { User, Order } from "@prisma/client"
 import OrderLists from "./OrderLists"
-import { userAgent } from "next/server"
-import { Routes, BlitzPage } from "@blitzjs/next"
+import { Routes } from "@blitzjs/next"
 import Link from "next/link"
 
 interface ActiveOrder {

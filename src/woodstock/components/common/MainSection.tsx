@@ -1,6 +1,4 @@
-import { useState } from "react"
 import MainSectionAdmin from "./MainSectionAdmin"
-import MainSectionCommercial from "./MainSectionCommercial"
 import styles from "src/woodstock/styles/common.module.css"
 import StockSection from "src/woodstock/components/stocks/StockSection"
 import OrderSection from "../orders/OrderSection"

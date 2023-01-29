@@ -13,6 +13,5 @@ export default function transformArrayOrder(orders: ValidOrder[]) {
     }
     return acc
   }, {})
-  console.log("test : ", test)
   return test
 }

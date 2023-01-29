@@ -6,7 +6,6 @@ type Props = {
 
 const UserInfos = (props: Props) => {
   const currentUserInfo = props.userInfos
-  console.log("Current user info : ", currentUserInfo)
 
   if (currentUserInfo && currentUserInfo.user && currentUserInfo.admin) {
     return (
