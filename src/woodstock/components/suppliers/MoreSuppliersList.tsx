@@ -10,6 +10,7 @@ interface Props {
 }
 
 export default function MoreSuppliersList({ admin, moreSuppliers, handleAddSupplier }: Props) {
+  const [suppliers, setSuppliers] = useState<Supplier[]>(moreSuppliers)
   const [selectedSupplierId, setSelectedSupplierId] = useState<string>()
 
   const displaySupplierDetails = (supplierId: string) => {

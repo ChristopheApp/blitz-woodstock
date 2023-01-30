@@ -31,12 +31,15 @@ export default function UserSuppliersList({ admin, suppliers, handleRemoveSuppli
   const displaySuppliers = userSuppliers.map((supplier) => {
     return (
       <li className={stylesSupplier.moreSuppliersItems} key={supplier.id}>
-        <p
-          className={stylesSupplier.moreSuppliersTitle}
-          onClick={() => displaySupplierDetails(supplier.id)}
-        >
-          <ButtonRemove onClick={() => removeSupplier(supplier.id)} /> {supplier.name}
-        </p>
+        <div style={{ display: "flex" }}>
+          <ButtonRemove onClick={() => removeSupplier(supplier.id)} />
+          <p
+            className={stylesSupplier.moreSuppliersTitle}
+            onClick={() => displaySupplierDetails(supplier.id)}
+          >
+            {supplier.name}
+          </p>
+        </div>
         {selectedSupplierId === supplier.id && (
           <DetailsSupplier
             onClickProps={handleRemoveSupplier}
