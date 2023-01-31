@@ -36,7 +36,7 @@ export default function randomWood() {
   const wood = {
     type: woodType,
     unitPrice: Math.floor(Math.random() * (120 - 60) + 60),
-    quantityPurchased: Math.floor(Math.random() * 1000),
+    quantityPurchased: Math.floor(Math.random() * (1000 - 50) + 50),
   }
   return wood
 }
