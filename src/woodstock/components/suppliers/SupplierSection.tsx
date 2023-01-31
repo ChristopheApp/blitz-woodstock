@@ -19,14 +19,15 @@ export default function SupplierSection({ admin }: Props) {
   const [displayNewSuppliers, setDisplayNewSuppliers] = useState<boolean>(false)
 
   useEffect(() => {
-    const fetchSuppliers = async () => {
-      const suppliers = await getAdminSuppliers(admin.id)
-      setUserSuppliers(suppliers)
-    }
-    fetchSuppliers()
+    fetchUserSuppliers()
   }, [])
 
-  const fetchSuppliers = async () => {
+  const fetchUserSuppliers = async () => {
+    const suppliers = await getAdminSuppliers(admin.id)
+    setUserSuppliers(suppliers)
+  }
+
+  const fetchMoreSuppliers = async () => {
     if (!displayNewSuppliers) {
       const newSuppliers = await getNotAdminSuppliers(admin.id)
       setMoreSuppliers(newSuppliers)
@@ -37,10 +38,12 @@ export default function SupplierSection({ admin }: Props) {
   const addSupplier = async (supplierId: string) => {
     const result = await addSupplierToAdmin({ supplierId, adminId })
     setUserSuppliers(result.suppliers)
+    fetchMoreSuppliers()
   }
 
   const removeSupplier = async (supplierId: string) => {
-    removeSupplierFromAdmin({ supplierId, adminId }).then(fetchSuppliers)
+    removeSupplierFromAdmin({ supplierId, adminId }).then(fetchMoreSuppliers)
+    fetchUserSuppliers()
   }
 
   return (
@@ -55,7 +58,7 @@ export default function SupplierSection({ admin }: Props) {
         />
       )}
 
-      <button onClick={fetchSuppliers}>
+      <button onClick={fetchMoreSuppliers}>
         {displayNewSuppliers ? "Masquer les fournisseurs" : "Afficher plus de fournisseurs"}
       </button>
 

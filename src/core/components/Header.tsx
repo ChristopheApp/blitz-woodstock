@@ -6,8 +6,11 @@ import { useMutation } from "@blitzjs/rpc"
 import { useCurrentUser } from "src/users/hooks/useCurrentUser"
 import { Routes, BlitzPage } from "@blitzjs/next"
 import Link from "next/link"
+import { useRouter } from "next/router"
 
 const UserInfo = () => {
+  const router = useRouter()
+
   const currentUserInfo = useCurrentUser()
   const [logoutMutation] = useMutation(logout)
 
@@ -26,7 +29,9 @@ const UserInfo = () => {
             <button
               className={styles.button}
               onClick={async () => {
-                await logoutMutation()
+                await logoutMutation().then(() => {
+                  router.push(Routes.Home())
+                })
               }}
             >
               Logout

@@ -51,11 +51,11 @@ const Home: BlitzPage = (props: Props) => {
         <Suspense fallback="Loading...">
           <UserInfos userInfos={props.userInfos} />
         </Suspense>
-        <main className={styles.main}>
+        {/* <main className={styles.main}>
           <div className={styles.wrapper}>
-            <div className={styles.body}>
-              {/* Instructions */}
-              <div className={styles.instructions}>
+            <div className={styles.body}> */}
+        {/* Instructions */}
+        {/* <div className={styles.instructions}>
                 <p>
                   <strong>TODO : Set relation command / user ...</strong>
                 </p>
@@ -117,9 +117,9 @@ const Home: BlitzPage = (props: Props) => {
                     </pre>
                   </div>
                 </div>
-              </div>
-              {/* Links */}
-              <div className={styles.linkGrid}>
+              </div> */}
+        {/* Links */}
+        {/* <div className={styles.linkGrid}>
                 <a
                   href="https://blitzjs.com/docs/getting-started?utm_source=blitz-new&utm_medium=app-template&utm_campaign=blitz-new"
                   target="_blank"
@@ -168,7 +168,7 @@ const Home: BlitzPage = (props: Props) => {
               </div>
             </div>
           </div>
-        </main>
+        </main> */}
 
         <footer className={styles.footer}>
           <span>Powered by</span>

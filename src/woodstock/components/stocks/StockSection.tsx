@@ -13,6 +13,7 @@ interface Props {
 
 export default function StockSection({ admin }: Props) {
   const [stocks, setStocks] = useState<Wood[]>([])
+  const [woodSold, setWoodSold] = useState<Wood[]>([])
 
   useEffect(() => {
     fetchStocks()
@@ -20,9 +21,14 @@ export default function StockSection({ admin }: Props) {
 
   const fetchStocks = async () => {
     const result = await getUserStock(admin.id)
+    console.log(result)
+    const stock = result.stock
+    const woodSold = result.woodSold?.stock
+    console.log(stock)
 
-    const stock = result?.stock
-
+    if (woodSold) {
+      setWoodSold(woodSold)
+    }
     if (stock) {
       setStocks(stock)
     }
@@ -45,6 +51,26 @@ export default function StockSection({ admin }: Props) {
     })
   }
 
+  const displayWoodSold = () => {
+    return woodSold.map((wood) => {
+      return (
+        <div key={wood.type} className={styles.stockItems}>
+          <h4>{wood.type}</h4>
+          <div>
+            <p>Bénéfices : {wood.totalSoldPrice - wood.totalPurchasedPrice} €</p>
+            <p>Prix de vente moyen : {Math.ceil(wood.totalSoldPrice / wood.quantitySold)} €/m³</p>
+            <p>
+              Prix d'achat moyen : {Math.ceil(wood.totalPurchasedPrice / wood.quantityPurchased)}{" "}
+              €/m³
+            </p>
+            <p>Quantité vendue : {wood.quantitySold} m³</p>
+            <p>Quantité en stock : {wood.quantityPurchased - wood.quantitySold} m³</p>
+          </div>
+        </div>
+      )
+    })
+  }
+
   return (
     <section className={styles.stockSection}>
       <h2>Mes stocks</h2>
@@ -52,6 +78,12 @@ export default function StockSection({ admin }: Props) {
         <div className={styles.stockContainer}>{displayStocks()}</div>
       ) : (
         <p>Vous n'avez pas de stocks</p>
+      )}
+      <h2>Ventes</h2>
+      {woodSold.length > 0 ? (
+        <div className={styles.stockContainer}>{displayWoodSold()}</div>
+      ) : (
+        <p>Vous n'avez pas vendu de bois</p>
       )}
     </section>
   )

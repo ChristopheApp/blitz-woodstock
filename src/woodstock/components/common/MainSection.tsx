@@ -18,7 +18,7 @@ export default function MainSection({ currentUserInfos }: Props) {
           {isAdmin && <MainSectionAdmin currentUserInfos={currentUserInfos} />}
         </div>
         <div className={styles.rightSection}>
-          <OrderSection customers={customers} orders={orders} user={user} admin={admin} />
+          <OrderSection customers={customers} user={user} admin={admin} />
 
           {/* {isAdmin ? (
             <MainSectionAdmin currentUserInfos={currentUserInfos} />

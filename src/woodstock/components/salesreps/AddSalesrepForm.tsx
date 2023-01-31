@@ -7,7 +7,7 @@ import styles from "src/woodstock/styles/common.module.css"
 import { User } from "@prisma/client"
 
 type AddSalesrepFormProps = {
-  onSuccess?: () => void
+  onSuccess?: (salesreps: User[]) => void
   adminId: string
   onCallback?: (salesreps: User[]) => void
 }
@@ -29,8 +29,8 @@ export const AddSalesrepForm = (props: AddSalesrepFormProps) => {
         onSubmit={async (values) => {
           try {
             const result = await addSalesrepMutation(values)
-            props.onSuccess?.()
-            props.onCallback?.(result.salesreps)
+            props.onSuccess?.(result.salesreps)
+            // props.onCallback?.(result.salesreps)
           } catch (error: any) {
             if (error.code === "P2002" && error.meta?.target?.includes("email")) {
               // This error comes from Prisma

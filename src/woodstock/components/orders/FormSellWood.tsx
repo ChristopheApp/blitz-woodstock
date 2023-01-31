@@ -22,7 +22,7 @@ export default function FormSellWood({ admin, customers }: Props) {
 
   const fetchStocks = async () => {
     const result = await getUserStock(admin.id)
-    const stock = result?.stock
+    const stock = result.stock
 
     if (stock) {
       setStocks(stock)

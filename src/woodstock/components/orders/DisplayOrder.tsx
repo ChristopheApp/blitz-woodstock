@@ -8,9 +8,10 @@ import payOrder from "src/woodstock/mutations/order/payOrder"
 
 interface Props {
   oneOrder: Order
+  handleReload: () => void
 }
 
-export default function DisplayOrder({ oneOrder }: Props) {
+export default function DisplayOrder({ handleReload, oneOrder }: Props) {
   const [order, setOrder] = useState<Order>(oneOrder)
   const [orderStatus, setOrderStatus] = useState("Devis en attente")
   const [textButtonValid, setTextButtonValid] = useState("Valider")
@@ -24,6 +25,7 @@ export default function DisplayOrder({ oneOrder }: Props) {
     } else if (order.status === "DELIVERED") {
       const result = await payOrder(id)
       setOrder(result)
+      handleReload()
     } else {
       const result = await acceptOrder(id)
       setOrder(result)
@@ -39,6 +41,7 @@ export default function DisplayOrder({ oneOrder }: Props) {
       const result = await cancelOrder(order)
       setOrder(result)
     }
+    handleReload()
   }
 
   useEffect(() => {
