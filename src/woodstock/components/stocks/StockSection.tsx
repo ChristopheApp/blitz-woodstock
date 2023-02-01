@@ -14,7 +14,7 @@ interface Props {
 export default function StockSection({ admin }: Props) {
   const [stocks, setStocks] = useState<Wood[]>([])
   const [woodSold, setWoodSold] = useState<Wood[]>([])
-
+  const [benefitsTotal, setBenefitsTotal] = useState<number>(0)
   useEffect(() => {
     fetchStocks()
   }, [])
@@ -23,7 +23,7 @@ export default function StockSection({ admin }: Props) {
     const result = await getUserStock(admin.id)
     console.log(result)
     const stock = result.stock
-    const woodSold = result.woodSold?.stock
+    const woodSold = result.woodSoldSorted
     console.log(stock)
 
     if (woodSold) {
@@ -52,12 +52,26 @@ export default function StockSection({ admin }: Props) {
   }
 
   const displayWoodSold = () => {
+    let benefits = 0
+    woodSold.forEach((wood) => {
+      if (wood.totalSoldPrice - wood.totalPurchasedPrice > 0)
+        benefits += wood.totalSoldPrice - wood.totalPurchasedPrice
+    })
+    console.log("benefits", benefits)
     return woodSold.map((wood) => {
       return (
         <div key={wood.type} className={styles.stockItems}>
           <h4>{wood.type}</h4>
           <div>
             <p>Bénéfices : {wood.totalSoldPrice - wood.totalPurchasedPrice} €</p>
+            {wood.totalSoldPrice - wood.totalPurchasedPrice > 0 && (
+              <p>
+                % bénéfices :{" "}
+                {Math.round(
+                  (((wood.totalSoldPrice - wood.totalPurchasedPrice) * 100) / benefits) * 100
+                ) / 100}
+              </p>
+            )}
             <p>Prix de vente moyen : {Math.ceil(wood.totalSoldPrice / wood.quantitySold)} €/m³</p>
             <p>
               Prix d'achat moyen : {Math.ceil(wood.totalPurchasedPrice / wood.quantityPurchased)}{" "}

@@ -25,5 +25,9 @@ export default async function getUserStock(userId: string) {
     },
   })
 
-  return { stock, user, woodSold }
+  const woodSoldSorted = woodSold?.stock.sort(
+    (a, b) => b.totalSoldPrice - b.totalPurchasedPrice - (a.totalSoldPrice - a.totalPurchasedPrice)
+  )
+
+  return { stock, user, woodSoldSorted }
 }
