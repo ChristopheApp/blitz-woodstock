@@ -111,7 +111,6 @@
   flex-direction: row;
   align-self: center;
   max-width: var(--screen-width);
-  background-color: brown;
 }
 
 .instructions {
@@ -119,7 +118,6 @@
   flex-direction: column;
   padding: 1rem;
   width: 100%;
-  background-color: chartreuse;
 }
 
 .globe {
